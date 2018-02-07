@@ -1,5 +1,5 @@
 ---
-title: "R Plotting and Mapping Tutorial"
+title: "R-Plotting-and-Mapping-Tutorial"
 author: "Mark Simpson"
 date: "January 30, 2017"
 output:
@@ -25,8 +25,8 @@ knitr::opts_chunk$set(echo = TRUE)
  # install.packages("tmap")
 ```
 
----
-# Meta-introduction February 5, 2018
+
+# Meta-introduction: February 5, 2018
 This tutorial was originally created for the [Geospatial Data Science 2017 workshop](https://sites.psu.edu/gds2017/), which I co-organized along with Dr. Eun-Kyeong Kim, and which was help February 3rd-5th, 2017 on the Penn State campus. It was originally given as part of a live tutorial. I have slightly updated the formatting, but it is presented as-is.
 
 
@@ -93,7 +93,6 @@ barplot(mpg, col = "slategray") # Here is our slategray barplot
 
 col2rgb("slategray")  # Yields RGB values
 
-#?rgb
 ```
 Here are examples in RGB:
 
@@ -210,11 +209,7 @@ barplot(mpg, col = brewer.pal(5,"Set2")) # Set2 applied to our barplot
 Okay, now let's get to some real plotting. First, how to get that bar chart into something sensible? First, we need to do a little data processing to get the appropriate information for a bar chart. Barplot works off of a *table*, which can be created using a function of the same name.
 
 ```{r, tidy = TRUE}
-
-head(mtcars) # Reminder of the data we have
-
 cyl.table <- table(mtcars$cyl) # Create a summary table of the cyl variable in mtcars
-cyl.table # Check results
 
 barplot(cyl.table) # Not fancy, but there are many, many other options...
 ```
@@ -269,7 +264,8 @@ barplot(cyl.table,
         xlab = "Number of Cars with Cylinder Type")
 
 ```
-## Par()
+
+## "Par()
 
 As you can see, our graph is neat, but our labels are a little too close to the edges. These and many options like these are contained not with individual plot functions, but within the plotting system itself, which can be set by using the *par()* (parameters) function. A good description of many of thehttp://www.statmethods.net/advgraphs/parameters.html can be found at Quick-R (here)[http://www.statmethods.net/advgraphs/parameters.html].
 
@@ -277,8 +273,8 @@ As you can see, our graph is neat, but our labels are a little too close to the 
 
 ```{r, tidy = TRUE}
 
-# par() # This will list the current settings
-par()
+# This will list the current settings ( commented because obnoxious)
+#par()
 
 o.par <- par(no.readonly = T) # Store current setting in new variable, but not read only ones
 
@@ -357,7 +353,7 @@ par(o.par) # Rest par() to original
 ```
 ## Histograms
 
-Histograms are similar in looks to barplots, and often more useful. Here we will also add a line represented the mean along with a label, and a line representing density.
+Histograms are similar in looks to barplots, and often more useful. Here we will also add a line representing the mean along with a label, and a line representing density.
 
 ```{r, tidy = TRUE}
 hist(mtcars$qsec,
@@ -443,6 +439,7 @@ legend("topright", # Location (can also be x, y)
 abline(h = mean(mtcars$qsec), lty = 2, col = "gray50") # Line for global mean
 
 ```
+
 ## Scatterplot
 
 Okay, now let's work with the simple scatter plot. The trick is altering the point symbols, which have totally different parameters attached.
@@ -472,8 +469,6 @@ Yeah, so that's not that exciting, but there's a lot we can add for it to be mor
 mtcars$cyl.2 <- as.factor(mtcars$cyl) # Create a new field so we can use unclass()
 mtcars$cyl.2 # Check results, note it has "levels"
 
-# This essentially assigns color per category
-# c("#00008B96", "#00640096", "#8B000096")[unclass(mtcars$cyl.2)]
 ```
 
 
@@ -499,6 +494,7 @@ legend("topright", # Location (can also be x, y)
        cex = 1) # Make a little bigger
 
 ```
+
 ## (Not very good) Lines
 
 Line charts are slightly involved in R for some reason, since you effectively have to create a graph, then add lines for each variable. This example is pretty notional since this data doesn't really contain anything that makes particular sense to use a line graph for, like change over time.
@@ -539,6 +535,7 @@ pairs(mtcars[c(1,4,7)],
        )
 
 ```
+
 ## Multiple Plotting with mfrow()
 
 As a bonus, you can place multiple graphs in the same plot by changing the mfrow option in *par()*
@@ -573,7 +570,8 @@ plot(mtcars$hp, mtcars$mpg,
 
 par(o.par) # Reset par
 ```
-## Exporting in Brief
+
+##Exporting in Brief
 
 You can save plots through R studio, but you can also write code to do it, which is useful when you have multiple plots to generate. There are several different filetypes available, and the directory can be specified more directly, but the principle is that you call the specif function, create the plot, and then use *dev.off()* to stop 'plotting' and actually export the file.
 

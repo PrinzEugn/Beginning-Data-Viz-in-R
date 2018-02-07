@@ -1,293 +1,38 @@
-R Plotting and Mapping Tutorial
+R-Plotting-and-Mapping-Tutorial
 ================
 Mark Simpson
 January 30, 2017
 
-<table style="width:4%;">
-<colgroup>
-<col width="4%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td># Meta-introduction February 5, 2018 This tutorial was originally created for the <a href="https://sites.psu.edu/gds2017/">Geospatial Data Science 2017 workshop</a>, which I co-organized along with Dr. Eun-Kyeong Kim, and which was help February 3rd-5th, 2017 on the Penn State campus. It was originally given as part of a live tutorial. I have slightly updated the formatting, but it is presented as-is.</td>
-</tr>
-<tr class="even">
-<td># Introduction</td>
-</tr>
-<tr class="odd">
-<td>This tutorial is meant to give a very basic overview of plotting data and mapping for R. We will briefly get sense of basic R plotting using the default plotting functions. We'll also cover the basics such as how to import and make maps with point, line, and polygon data, and then make those maps not suck. This tutorial is not meant to be comprehensive (how can it be when a new package comes out every minute?), but is meant to get you started so can start building your own workflow.</td>
-</tr>
-<tr class="even">
-<td>The general outline is:</td>
-</tr>
-<tr class="odd">
-<td>* Basic Plots with Default R * Scratch Surface of ggplot * Mapping with GISTools * Using Real Data</td>
-</tr>
-<tr class="even">
-<td># Working with Color</td>
-</tr>
-<tr class="odd">
-<td>Color is fundamental to making usable, understandable, and beautiful visualizations, and is where we are going to start.</td>
-</tr>
-<tr class="even">
-<td>Before we can mess with color, we need some graphic, and to get a graphic, it'd be best to get some data. So, we will load in a built-in dataset within R called <em>mtcars</em> (car statistics, details (here)[<a href="http://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html" class="uri">http://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html</a>], and extract some values to then graph.</td>
-</tr>
-<tr class="odd">
-<td>```r rm(list = ls()) # Clear environment</td>
-</tr>
-<tr class="even">
-<td># Get some data to play with data(mtcars) # Built-in dataset, motor trend car testing head(mtcars) # First 5 rows ```</td>
-</tr>
-<tr class="odd">
-<td><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb ## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4 ## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4 ## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1 ## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1 ## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2 ## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></td>
-</tr>
-<tr class="even">
-<td><code>r mtcars$mpg # Get a column</code></td>
-</tr>
-<tr class="odd">
-<td><code>##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2 ## [15] 10.4 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4 ## [29] 15.8 19.7 15.0 21.4</code></td>
-</tr>
-<tr class="even">
-<td><code>r mpg &lt;- mtcars$mpg[1:5] # Put first five values into new array mpg # Check results</code></td>
-</tr>
-<tr class="odd">
-<td><code>## [1] 21.0 21.0 22.8 21.4 18.7</code></td>
-</tr>
-<tr class="even">
-<td><code>r mpg &lt;- mtcars[1:5, 1] # Same as this mpg # Check Results</code></td>
-</tr>
-<tr class="odd">
-<td><code>## [1] 21.0 21.0 22.8 21.4 18.7</code></td>
-</tr>
-<tr class="even">
-<td>Now that we have a simple piece of data, it's easy to graph it. R's default <em>plot()</em> function will make an attempt to graph many types of datasets, but often more specialized functions are available.</td>
-</tr>
-<tr class="odd">
-<td><code>r plot(mpg) # R makes a guess with just plot()</code></td>
-</tr>
-<tr class="even">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-2-1.png" /></td>
-</tr>
-<tr class="odd">
-<td><em>barplot()</em> is an example of a more specialized function. For our purposes in understanding color, let's just stick with it.</td>
-</tr>
-<tr class="even">
-<td><code>r barplot(mpg) # More specific function</code></td>
-</tr>
-<tr class="odd">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-3-1.png" /></td>
-</tr>
-<tr class="even">
-<td>There are several different ways to specify color manually, but R also has a predefined list of colors that you can call by name. While you can look this up within R, the easiest way is to use an external reference, such as this cheat (sheet)[<a href="http://research.stowers-institute.org/efg/R/Color/Chart/ColorChart.pdf" class="uri">http://research.stowers-institute.org/efg/R/Color/Chart/ColorChart.pdf</a>].</td>
-</tr>
-<tr class="odd">
-<td>```r # colors() # All named colors in R</td>
-</tr>
-<tr class="even">
-<td>head(colors()) # First five ```</td>
-</tr>
-<tr class="odd">
-<td><code>## [1] &quot;white&quot;         &quot;aliceblue&quot;     &quot;antiquewhite&quot;  &quot;antiquewhite1&quot; ## [5] &quot;antiquewhite2&quot; &quot;antiquewhite3&quot;</code></td>
-</tr>
-<tr class="even">
-<td><code>r colors()[599] # Specific color in list</code></td>
-</tr>
-<tr class="odd">
-<td><code>## [1] &quot;slategray&quot;</code></td>
-</tr>
-<tr class="even">
-<td>We can then assign any of these colors to our graph, which can be done in multiple ways, such as by named color, rgb value, or even the hex value of the color.</td>
-</tr>
-<tr class="odd">
-<td><code>r barplot(mpg, col = &quot;slategray&quot;) # Here is our slategray barplot</code></td>
-</tr>
-<tr class="even">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-5-1.png" /></td>
-</tr>
-<tr class="odd">
-<td><code>r col2rgb(&quot;slategray&quot;)  # Yields RGB values</code></td>
-</tr>
-<tr class="even">
-<td><code>##       [,1] ## red    112 ## green  128 ## blue   144</code></td>
-</tr>
-<tr class="odd">
-<td><code>r #?rgb</code> Here are examples in RGB:</td>
-</tr>
-<tr class="even">
-<td>Values are between 0-1, here red is at max value, which is the reddest red you can red.</td>
-</tr>
-<tr class="odd">
-<td><code>r barplot(mpg, col = rgb(1, .0, .0))</code></td>
-</tr>
-<tr class="even">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-6-1.png" /></td>
-</tr>
-<tr class="odd">
-<td>Here red is at half value, see the difference?</td>
-</tr>
-<tr class="even">
-<td><code>r barplot(mpg, col = rgb(.5, .0, .0))</code></td>
-</tr>
-<tr class="odd">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-7-1.png" /></td>
-</tr>
-<tr class="even">
-<td>Red with alpha channel set for 25% opacity:</td>
-</tr>
-<tr class="odd">
-<td><code>r barplot(mpg, col = rgb(.5, .0, .0, .25))</code></td>
-</tr>
-<tr class="even">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-8-1.png" /></td>
-</tr>
-<tr class="odd">
-<td>This has the range changed to 0-255, more common in graphics software like Photoshop.</td>
-</tr>
-<tr class="even">
-<td><code>r barplot(mpg, col = rgb(255, 0, 0, max = 255))</code></td>
-</tr>
-<tr class="odd">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-9-1.png" /></td>
-</tr>
-<tr class="even">
-<td>RGB Hexcodes are somewhat more common (RGB on the 0-255 scale, as FF in hex equals 255 in decimal) :</td>
-</tr>
-<tr class="odd">
-<td><code>r barplot(mpg, col = &quot;#FF0000&quot;)  # Note the values (FF, 00, 00)</code></td>
-</tr>
-<tr class="even">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-10-1.png" /></td>
-</tr>
-<tr class="odd">
-<td>Colors can also be stored within an array and used within other functions, which can be used for categorical variables. R also has several built-in color &quot;palettes&quot; that can be accessed.</td>
-</tr>
-<tr class="even">
-<td><code>r barplot(mpg, col = c(&quot;red&quot;, &quot;blue&quot;))  # Colors will cycle</code></td>
-</tr>
-<tr class="odd">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-11-1.png" /></td>
-</tr>
-<tr class="even">
-<td>You can also store several colors in vector, like so:</td>
-</tr>
-<tr class="odd">
-<td>```r red.blue &lt;- c(&quot;red&quot;, &quot;blue&quot;) # Vector so store color information</td>
-</tr>
-<tr class="even">
-<td>barplot(mpg, col = red.blue) ```</td>
-</tr>
-<tr class="odd">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-12-1.png" /></td>
-</tr>
-<tr class="even">
-<td>There are also several built-in color pallets available in R...</td>
-</tr>
-<tr class="odd">
-<td><code>r barplot(mpg, col = 1:6)</code></td>
-</tr>
-<tr class="even">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-13-1.png" /></td>
-</tr>
-<tr class="odd">
-<td><code>r barplot(mpg, col = rainbow(6))</code></td>
-</tr>
-<tr class="even">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-14-1.png" /></td>
-</tr>
-<tr class="odd">
-<td><code>r barplot(mpg, col = heat.colors(6))</code></td>
-</tr>
-<tr class="even">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-15-1.png" /></td>
-</tr>
-<tr class="odd">
-<td><code>r barplot(mpg, col = terrain.colors(6))</code></td>
-</tr>
-<tr class="even">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-16-1.png" /></td>
-</tr>
-<tr class="odd">
-<td><code>r barplot(mpg, col = topo.colors(6))</code></td>
-</tr>
-<tr class="even">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-17-1.png" /></td>
-</tr>
-<tr class="odd">
-<td><code>r barplot(mpg, col = cm.colors(6))</code></td>
-</tr>
-<tr class="even">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-18-1.png" /></td>
-</tr>
-<tr class="odd">
-<td>While these built-in colors are useful, they are not necessarily pretty, easily printable, or color-blind friendly. Luckily, someone has already created a fantastic set up colors tailored to data visualization.</td>
-</tr>
-<tr class="even">
-<td><em>RColorBrewer</em> is based off of the tool (Color Brewer)[<a href="http://colorbrewer2.org/" class="uri">http://colorbrewer2.org/</a>], created by Dr. Cindy Brewer, head of the PSU Department of Geography, and a classy lady. Originally conceived for maps, it is very useful for all kinds of data, as we shall see.</td>
-</tr>
-<tr class="odd">
-<td>```r # install.packages(&quot;RColorBrewer&quot;)</td>
-</tr>
-<tr class="even">
-<td>library(&quot;RColorBrewer&quot;)</td>
-</tr>
-<tr class="odd">
-<td># List all palettes and attributes # brewer.pal.info # Note the attributes</td>
-</tr>
-<tr class="even">
-<td>display.brewer.all() # Actually display those palettes ```</td>
-</tr>
-<tr class="odd">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-19-1.png" /></td>
-</tr>
-<tr class="even">
-<td><code>r #Display only those that are colorblind friendly display.brewer.all( colorblindFriendly = TRUE)</code></td>
-</tr>
-<tr class="odd">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-19-2.png" /></td>
-</tr>
-<tr class="even">
-<td>```r # Display a specific number of colors for a palettes</td>
-</tr>
-<tr class="odd">
-<td>display.brewer.pal(7,&quot;BrBG&quot;) # Display a sequence of seven colors from BrBG ```</td>
-</tr>
-<tr class="even">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-19-3.png" /></td>
-</tr>
-<tr class="odd">
-<td><code>r display.brewer.pal(9,&quot;PiYG&quot;) # Display a sequence of nine colors from PiYG</code></td>
-</tr>
-<tr class="even">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-19-4.png" /></td>
-</tr>
-<tr class="odd">
-<td><code>r brewer.pal(7,&quot;BrBG&quot;) # The actual function to use, note it returns Hex codes</code></td>
-</tr>
-<tr class="even">
-<td><code>## [1] &quot;#8C510A&quot; &quot;#D8B365&quot; &quot;#F6E8C3&quot; &quot;#F5F5F5&quot; &quot;#C7EAE5&quot; &quot;#5AB4AC&quot; &quot;#01665E&quot;</code></td>
-</tr>
-<tr class="odd">
-<td><code>r barplot(mpg, col = brewer.pal(5,&quot;BrBG&quot;)) # BrBG applied to our barplot</code></td>
-</tr>
-<tr class="even">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-19-5.png" /></td>
-</tr>
-<tr class="odd">
-<td><code>r barplot(mpg, col = brewer.pal(5,&quot;Set2&quot;)) # Set2 applied to our barplot</code></td>
-</tr>
-<tr class="even">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-19-6.png" /></td>
-</tr>
-</tbody>
-</table>
+Meta-introduction: February 5, 2018
+===================================
 
-Plotting (Statistical Graphs)
-=============================
+This tutorial was originally created for the [Geospatial Data Science 2017 workshop](https://sites.psu.edu/gds2017/), which I co-organized along with Dr. Eun-Kyeong Kim, and which was help February 3rd-5th, 2017 on the Penn State campus. It was originally given as part of a live tutorial. I have slightly updated the formatting, but it is presented as-is.
 
-Okay, now let's get to some real plotting. First, how to get that bar chart into something sensible? First, we need to do a little data processing to get the appropriate information for a bar chart. Barplot works off of a *table*, which can be created using a function of the same name.
+Introduction
+============
+
+This tutorial is meant to give a very basic overview of plotting data and mapping for R. We will briefly get sense of basic R plotting using the default plotting functions. We'll also cover the basics such as how to import and make maps with point, line, and polygon data, and then make those maps not suck. This tutorial is not meant to be comprehensive (how can it be when a new package comes out every minute?), but is meant to get you started so can start building your own workflow.
+
+The general outline is:
+
+-   Basic Plots with Default R
+-   Scratch Surface of ggplot
+-   Mapping with GISTools
+-   Using Real Data
+
+Working with Color
+==================
+
+Color is fundamental to making usable, understandable, and beautiful visualizations, and is where we are going to start.
+
+Before we can mess with color, we need some graphic, and to get a graphic, it'd be best to get some data. So, we will load in a built-in dataset within R called *mtcars* (car statistics, details (here)\[<http://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html>\], and extract some values to then graph.
 
 ``` r
-head(mtcars) # Reminder of the data we have
+rm(list = ls()) # Clear environment
+
+# Get some data to play with
+data(mtcars) # Built-in dataset, motor trend car testing
+head(mtcars) # First 5 rows
 ```
 
     ##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
@@ -299,15 +44,240 @@ head(mtcars) # Reminder of the data we have
     ## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
 
 ``` r
-cyl.table <- table(mtcars$cyl) # Create a summary table of the cyl variable in mtcars
-cyl.table # Check results
+mtcars$mpg # Get a column
 ```
 
-    ## 
-    ##  4  6  8 
-    ## 11  7 14
+    ##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2
+    ## [15] 10.4 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4
+    ## [29] 15.8 19.7 15.0 21.4
 
 ``` r
+mpg <- mtcars$mpg[1:5] # Put first five values into new array
+mpg # Check results
+```
+
+    ## [1] 21.0 21.0 22.8 21.4 18.7
+
+``` r
+mpg <- mtcars[1:5, 1] # Same as this
+mpg # Check Results
+```
+
+    ## [1] 21.0 21.0 22.8 21.4 18.7
+
+Now that we have a simple piece of data, it's easy to graph it. R's default *plot()* function will make an attempt to graph many types of datasets, but often more specialized functions are available.
+
+``` r
+plot(mpg) # R makes a guess with just plot()
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-2-1.png)
+
+*barplot()* is an example of a more specialized function. For our purposes in understanding color, let's just stick with it.
+
+``` r
+barplot(mpg) # More specific function
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-3-1.png)
+
+There are several different ways to specify color manually, but R also has a predefined list of colors that you can call by name. While you can look this up within R, the easiest way is to use an external reference, such as this cheat (sheet)\[<http://research.stowers-institute.org/efg/R/Color/Chart/ColorChart.pdf>\].
+
+``` r
+# colors() # All named colors in R
+
+head(colors()) # First five
+```
+
+    ## [1] "white"         "aliceblue"     "antiquewhite"  "antiquewhite1"
+    ## [5] "antiquewhite2" "antiquewhite3"
+
+``` r
+colors()[599] # Specific color in list
+```
+
+    ## [1] "slategray"
+
+We can then assign any of these colors to our graph, which can be done in multiple ways, such as by named color, rgb value, or even the hex value of the color.
+
+``` r
+barplot(mpg, col = "slategray") # Here is our slategray barplot
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-5-1.png)
+
+``` r
+col2rgb("slategray")  # Yields RGB values
+```
+
+    ##       [,1]
+    ## red    112
+    ## green  128
+    ## blue   144
+
+Here are examples in RGB:
+
+Values are between 0-1, here red is at max value, which is the reddest red you can red.
+
+``` r
+barplot(mpg, col = rgb(1, .0, .0))  
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-6-1.png)
+
+Here red is at half value, see the difference?
+
+``` r
+barplot(mpg, col = rgb(.5, .0, .0))  
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-7-1.png)
+
+Red with alpha channel set for 25% opacity:
+
+``` r
+barplot(mpg, col = rgb(.5, .0, .0, .25)) 
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-8-1.png)
+
+This has the range changed to 0-255, more common in graphics software like Photoshop.
+
+``` r
+barplot(mpg, col = rgb(255, 0, 0, max = 255)) 
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-9-1.png)
+
+RGB Hexcodes are somewhat more common (RGB on the 0-255 scale, as FF in hex equals 255 in decimal) :
+
+``` r
+barplot(mpg, col = "#FF0000")  # Note the values (FF, 00, 00)
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-10-1.png)
+
+Colors can also be stored within an array and used within other functions, which can be used for categorical variables. R also has several built-in color "palettes" that can be accessed.
+
+``` r
+barplot(mpg, col = c("red", "blue"))  # Colors will cycle
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-11-1.png)
+
+You can also store several colors in vector, like so:
+
+``` r
+red.blue <- c("red", "blue") # Vector so store color information
+
+barplot(mpg, col = red.blue)
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-12-1.png)
+
+There are also several built-in color pallets available in R...
+
+``` r
+barplot(mpg, col = 1:6)
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-13-1.png)
+
+``` r
+barplot(mpg, col = rainbow(6))
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-14-1.png)
+
+``` r
+barplot(mpg, col = heat.colors(6))
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-15-1.png)
+
+``` r
+barplot(mpg, col = terrain.colors(6))
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-16-1.png)
+
+``` r
+barplot(mpg, col = topo.colors(6))
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-17-1.png)
+
+``` r
+barplot(mpg, col = cm.colors(6))
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-18-1.png)
+
+While these built-in colors are useful, they are not necessarily pretty, easily printable, or color-blind friendly. Luckily, someone has already created a fantastic set up colors tailored to data visualization.
+
+*RColorBrewer* is based off of the tool (Color Brewer)\[<http://colorbrewer2.org/>\], created by Dr. Cindy Brewer, head of the PSU Department of Geography, and a classy lady. Originally conceived for maps, it is very useful for all kinds of data, as we shall see.
+
+``` r
+# install.packages("RColorBrewer")
+
+library("RColorBrewer")
+
+# List all palettes and attributes
+# brewer.pal.info # Note the attributes
+
+display.brewer.all() # Actually display those palettes
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-19-1.png)
+
+``` r
+#Display only those that are colorblind friendly
+display.brewer.all( colorblindFriendly = TRUE)
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-19-2.png)
+
+``` r
+# Display a specific number of colors for a palettes
+
+display.brewer.pal(7,"BrBG") # Display a sequence of seven colors from BrBG
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-19-3.png)
+
+``` r
+display.brewer.pal(9,"PiYG") # Display a sequence of nine colors from PiYG
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-19-4.png)
+
+``` r
+brewer.pal(7,"BrBG") # The actual function to use, note it returns Hex codes
+```
+
+    ## [1] "#8C510A" "#D8B365" "#F6E8C3" "#F5F5F5" "#C7EAE5" "#5AB4AC" "#01665E"
+
+``` r
+barplot(mpg, col = brewer.pal(5,"BrBG")) # BrBG applied to our barplot
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-19-5.png)
+
+``` r
+barplot(mpg, col = brewer.pal(5,"Set2")) # Set2 applied to our barplot
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-19-6.png)
+---------------------------------------------------------------------------------------
+
+Plotting (Statistical Graphs)
+=============================
+
+Okay, now let's get to some real plotting. First, how to get that bar chart into something sensible? First, we need to do a little data processing to get the appropriate information for a bar chart. Barplot works off of a *table*, which can be created using a function of the same name.
+
+``` r
+cyl.table <- table(mtcars$cyl) # Create a summary table of the cyl variable in mtcars
+
 barplot(cyl.table) # Not fancy, but there are many, many other options...
 ```
 
@@ -363,234 +333,19 @@ barplot(cyl.table,
         xlab = "Number of Cars with Cylinder Type")
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-22-1.png) \#\# Par()
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-22-1.png)
+
+"Par()
+------
 
 As you can see, our graph is neat, but our labels are a little too close to the edges. These and many options like these are contained not with individual plot functions, but within the plotting system itself, which can be set by using the *par()* (parameters) function. A good description of many of thehttp://www.statmethods.net/advgraphs/parameters.html can be found at Quick-R (here)\[<http://www.statmethods.net/advgraphs/parameters.html>\].
 
 *par()* is great if you need to pump out a bunch of graphs since you only need to change them once. On the other hand, it can be slightly annoying because there is no built-in way to restore the default values, so it's best to store them in a variable.
 
 ``` r
-# par() # This will list the current settings
-par()
-```
+# This will list the current settings ( commented because obnoxious)
+#par()
 
-    ## $xlog
-    ## [1] FALSE
-    ## 
-    ## $ylog
-    ## [1] FALSE
-    ## 
-    ## $adj
-    ## [1] 0.5
-    ## 
-    ## $ann
-    ## [1] TRUE
-    ## 
-    ## $ask
-    ## [1] FALSE
-    ## 
-    ## $bg
-    ## [1] "white"
-    ## 
-    ## $bty
-    ## [1] "o"
-    ## 
-    ## $cex
-    ## [1] 1
-    ## 
-    ## $cex.axis
-    ## [1] 1
-    ## 
-    ## $cex.lab
-    ## [1] 1
-    ## 
-    ## $cex.main
-    ## [1] 1.2
-    ## 
-    ## $cex.sub
-    ## [1] 1
-    ## 
-    ## $cin
-    ## [1] 0.15 0.20
-    ## 
-    ## $col
-    ## [1] "black"
-    ## 
-    ## $col.axis
-    ## [1] "black"
-    ## 
-    ## $col.lab
-    ## [1] "black"
-    ## 
-    ## $col.main
-    ## [1] "black"
-    ## 
-    ## $col.sub
-    ## [1] "black"
-    ## 
-    ## $cra
-    ## [1] 14.4 19.2
-    ## 
-    ## $crt
-    ## [1] 0
-    ## 
-    ## $csi
-    ## [1] 0.2
-    ## 
-    ## $cxy
-    ## [1] 0.02604167 0.06329116
-    ## 
-    ## $din
-    ## [1] 6.999999 4.999999
-    ## 
-    ## $err
-    ## [1] 0
-    ## 
-    ## $family
-    ## [1] ""
-    ## 
-    ## $fg
-    ## [1] "black"
-    ## 
-    ## $fig
-    ## [1] 0 1 0 1
-    ## 
-    ## $fin
-    ## [1] 6.999999 4.999999
-    ## 
-    ## $font
-    ## [1] 1
-    ## 
-    ## $font.axis
-    ## [1] 1
-    ## 
-    ## $font.lab
-    ## [1] 1
-    ## 
-    ## $font.main
-    ## [1] 2
-    ## 
-    ## $font.sub
-    ## [1] 1
-    ## 
-    ## $lab
-    ## [1] 5 5 7
-    ## 
-    ## $las
-    ## [1] 0
-    ## 
-    ## $lend
-    ## [1] "round"
-    ## 
-    ## $lheight
-    ## [1] 1
-    ## 
-    ## $ljoin
-    ## [1] "round"
-    ## 
-    ## $lmitre
-    ## [1] 10
-    ## 
-    ## $lty
-    ## [1] "solid"
-    ## 
-    ## $lwd
-    ## [1] 1
-    ## 
-    ## $mai
-    ## [1] 1.02 0.82 0.82 0.42
-    ## 
-    ## $mar
-    ## [1] 5.1 4.1 4.1 2.1
-    ## 
-    ## $mex
-    ## [1] 1
-    ## 
-    ## $mfcol
-    ## [1] 1 1
-    ## 
-    ## $mfg
-    ## [1] 1 1 1 1
-    ## 
-    ## $mfrow
-    ## [1] 1 1
-    ## 
-    ## $mgp
-    ## [1] 3 1 0
-    ## 
-    ## $mkh
-    ## [1] 0.001
-    ## 
-    ## $new
-    ## [1] FALSE
-    ## 
-    ## $oma
-    ## [1] 0 0 0 0
-    ## 
-    ## $omd
-    ## [1] 0 1 0 1
-    ## 
-    ## $omi
-    ## [1] 0 0 0 0
-    ## 
-    ## $page
-    ## [1] TRUE
-    ## 
-    ## $pch
-    ## [1] 1
-    ## 
-    ## $pin
-    ## [1] 5.759999 3.159999
-    ## 
-    ## $plt
-    ## [1] 0.1171429 0.9400000 0.2040000 0.8360000
-    ## 
-    ## $ps
-    ## [1] 12
-    ## 
-    ## $pty
-    ## [1] "m"
-    ## 
-    ## $smo
-    ## [1] 1
-    ## 
-    ## $srt
-    ## [1] 0
-    ## 
-    ## $tck
-    ## [1] NA
-    ## 
-    ## $tcl
-    ## [1] -0.5
-    ## 
-    ## $usr
-    ## [1] 0 1 0 1
-    ## 
-    ## $xaxp
-    ## [1] 0 1 5
-    ## 
-    ## $xaxs
-    ## [1] "r"
-    ## 
-    ## $xaxt
-    ## [1] "s"
-    ## 
-    ## $xpd
-    ## [1] FALSE
-    ## 
-    ## $yaxp
-    ## [1] 0 1 5
-    ## 
-    ## $yaxs
-    ## [1] "r"
-    ## 
-    ## $yaxt
-    ## [1] "s"
-    ## 
-    ## $ylbias
-    ## [1] 0.2
-
-``` r
 o.par <- par(no.readonly = T) # Store current setting in new variable, but not read only ones
 
 par(mar = c(6,6,6,2)) # Set new margins, (bottom, left, top, right)
@@ -676,7 +431,7 @@ par(o.par) # Rest par() to original
 Histograms
 ----------
 
-Histograms are similar in looks to barplots, and often more useful. Here we will also add a line represented the mean along with a label, and a line representing density.
+Histograms are similar in looks to barplots, and often more useful. Here we will also add a line representing the mean along with a label, and a line representing density.
 
 ``` r
 hist(mtcars$qsec,
@@ -772,7 +527,10 @@ legend("topright", # Location (can also be x, y)
 abline(h = mean(mtcars$qsec), lty = 2, col = "gray50") # Line for global mean
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-30-1.png) \#\# Scatterplot
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-30-1.png)
+
+Scatterplot
+-----------
 
 Okay, now let's work with the simple scatter plot. The trick is altering the point symbols, which have totally different parameters attached.
 
@@ -811,11 +569,6 @@ mtcars$cyl.2 # Check results, note it has "levels"
     ## Levels: 4 6 8
 
 ``` r
-# This essentially assigns color per category
-# c("#00008B96", "#00640096", "#8B000096")[unclass(mtcars$cyl.2)]
-```
-
-``` r
 plot(mtcars$hp, mtcars$mpg,
      pch= c(15, 16, 17)[unclass(mtcars$cyl.2)], # Change type of point
      col = c("#00008B96", "#00640096", "#8B000096")[unclass(mtcars$cyl.2)], #Semi-transparent colors, assigned per cyl.2 type
@@ -837,7 +590,10 @@ legend("topright", # Location (can also be x, y)
        cex = 1) # Make a little bigger
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-35-1.png) \#\# (Not very good) Lines
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-35-1.png)
+
+(Not very good) Lines
+---------------------
 
 Line charts are slightly involved in R for some reason, since you effectively have to create a graph, then add lines for each variable. This example is pretty notional since this data doesn't really contain anything that makes particular sense to use a line graph for, like change over time.
 
@@ -877,7 +633,10 @@ pairs(mtcars[c(1,4,7)],
        )
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-37-1.png) \#\# Multiple Plotting with mfrow()
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-37-1.png)
+
+Multiple Plotting with mfrow()
+------------------------------
 
 As a bonus, you can place multiple graphs in the same plot by changing the mfrow option in *par()*
 
@@ -1104,8 +863,6 @@ library(GISTools, suppressPackageStartupMessages("True")) # Lead package without
 
     ## Loading required package: maptools
 
-    ## Warning: package 'maptools' was built under R version 3.4.3
-
     ## Loading required package: sp
 
     ## Checking rgeos availability: TRUE
@@ -1114,11 +871,9 @@ library(GISTools, suppressPackageStartupMessages("True")) # Lead package without
 
     ## Loading required package: rgeos
 
-    ## Warning: package 'rgeos' was built under R version 3.4.3
-
-    ## rgeos version: 0.3-26, (SVN revision 560)
+    ## rgeos version: 0.3-25, (SVN revision 555)
     ##  GEOS runtime version: 3.6.1-CAPI-1.10.1 r0 
-    ##  Linking to sp version: 1.2-7 
+    ##  Linking to sp version: 1.2-5 
     ##  Polygon checking: TRUE
 
 ``` r
