@@ -572,11 +572,13 @@ plot(mtcars$hp, mtcars$mpg,
 par(o.par) # Reset par
 ```
 
-##Exporting in Brief
+## Exporting in Brief
 
-You can save plots through R studio, but you can also write code to do it, which is useful when you have multiple plots to generate. There are several different filetypes available, and the directory can be specified more directly, but the principle is that you call the specif function, create the plot, and then use *dev.off()* to stop 'plotting' and actually export the file.
+You can save plots through R studio, but you can also write code to do it, which is useful when you have multiple plots to generate. There are several different filetypes available, and the directory can be specified more directly, but the principle is that you call the specif function, create the plot, and then use *dev.off()* to stop 'plotting' and actually export the file. 
 
-```{r, tidy = TRUE}
+For the markdown I've disabled the code, but it would look like this:
+
+```{r, eval= FALSE}
 png(filename= "Neat.png")  # "Open device""
 
 plot(mtcars$hp, mtcars$mpg,
@@ -868,7 +870,7 @@ plot(blocks,
      )
 
 # choropleth maps attributes held in SpatialPolygons DataFrame (e.g., 'blocks')
-choro.legend(px = 533000, py = 171000, 
+choro.legend(px = 533000, py = 167000, 
              sh = shades.blue,
              border = "#FFFFFF80", # Semitransparent white around boxes
              bg = NA, # No background color,
@@ -899,7 +901,7 @@ plot(blocks,
      border = add.alpha("#000000", .15) # partly transparent black
      )
 
-choro.legend(px = 533000, py = 171000, 
+choro.legend(px = 533000, py = 167000, 
              sh = shades.yell,
              border = NA,
              bg = NA, # No background color,
@@ -930,7 +932,7 @@ plot(blocks,
      col = NA, 
      border = add.alpha("#FFFFFF", .2))
 
-choro.legend(px = 533000, py = 171000, 
+choro.legend(px = 533000, py = 167000, 
              sh = shades.blue, 
              border = "#FFFFFF80", 
              bg = NA, bty = "n", 
@@ -954,7 +956,7 @@ plot(blocks,
      col=NA, 
      border = "gray15" ) # Alpha not working on second plot??
 
-choro.legend(px = 533000, py = 171000, 
+choro.legend(px = 533000, py = 167000, 
              sh = shades.yell, 
              border = NA, 
              bg = NA, 
@@ -1321,7 +1323,7 @@ choropleth(murica.spdf, murica.spdf$POPDENS, pop.dens.shades, border = "gray10")
 
 # Using the title function separately gives you more options 
 
-title("Density of 'Muricans", line = -2, col.main = "gray20", cex.main = 2) 
+title("Density of 'Muricans", line = -1, col.main = "gray20", cex.main = 2) 
 
 choro.legend(-125.5, 29.5, pop.dens.shades, bty ="n",  title = "Folks per Square Mile") # Placed manually, use our shades array, and remove legend box
 ```
@@ -1379,7 +1381,7 @@ title("Density of 'Muricans",
       cex.main = 2) # Create title, move it down two lines, make it gray, make it bigger (cex)
 
 #Note that since the coordinate system changed, we need to change our legend coordinates:
-choro.legend(-2250000, -1543980, 
+choro.legend(-2250000, -1443980, 
              border = "gray10",
              pop.dens.shades, 
              bty ="n",  
@@ -1396,7 +1398,7 @@ Unfortunately, depending on various projections, it can be somewhat difficult to
 
 ```{r ggmap_1, tidy = TRUE}
 #install.packages("ggmap")
-#install.packages("mapproj")
+
 library(ggmap)
 
 USA <- get_map(location = "United States", zoom = 3) # Create a map and store it
@@ -1410,7 +1412,7 @@ ggmap(USA) # Plot it! (begin eagle tears)
 *ggmap* is quite flexible with input, since it's based on Google Maps:
 
 ```{r ggmap_2, tidy = TRUE}
-PA <- get_map(location = "Pennsylvania", zoom = 8) # Hey I know that place!
+PA <- get_map(location = "Pennsylvania", zoom = 7) # Hey I know that place!
 
 ggmap(PA) # Plot it
 ```
@@ -1421,7 +1423,7 @@ You can change the source and type, which has some interestingly artistic option
 PA.2 <- get_map(location = "Pennsylvania", 
                 source = "stamen", # Change the source
                 maptype =  "watercolor", # Each source has different map types
-                zoom = 8 )
+                zoom = 7 )
 
 ggmap(PA.2) # Plot it
 ```

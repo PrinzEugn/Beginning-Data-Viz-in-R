@@ -680,6 +680,8 @@ Exporting in Brief
 
 You can save plots through R studio, but you can also write code to do it, which is useful when you have multiple plots to generate. There are several different filetypes available, and the directory can be specified more directly, but the principle is that you call the specif function, create the plot, and then use *dev.off()* to stop 'plotting' and actually export the file.
 
+For the markdown I've disabled the code, but it would look like this:
+
 ``` r
 png(filename= "Neat.png")  # "Open device""
 
@@ -697,121 +699,152 @@ plot(mtcars$hp, mtcars$mpg,
 dev.off()  # Close "device" (end writing)
 ```
 
-    ## png 
-    ##   2
+Scratching Surface of ggplot
+============================
 
-<table style="width:19%;">
-<colgroup>
-<col width="19%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td># Scratching Surface of ggplot</td>
-</tr>
-<tr class="even">
-<td>Okay let's take a brief dip into <em>ggplot</em>, which is widely used as it offers some advantages over R's default plotting in terms of customization. The downside is that it takes a fairly different approach to actually creating graphs which is much more layer-based, which can be somewhat mind-bending. Today we're going to start by recreating some of the graphs we have completed above using the <em>qplot()</em> (quick plot) function, based off those found <a href="http://www.statmethods.net/advgraphs/ggplot2.html">here</a>.</td>
-</tr>
-<tr class="odd">
-<td>```r rm(mpg) # Remove object since it has conflicting name</td>
-</tr>
-<tr class="even">
-<td># install.packages(&quot;ggplot2&quot;) library(ggplot2)</td>
-</tr>
-<tr class="odd">
-<td># Quickest plot qplot(mpg, data = mtcars) # Assumes histogram, note tip in console ```</td>
-</tr>
-<tr class="even">
-<td><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></td>
-</tr>
-<tr class="odd">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-40-1.png" /> This can get real fancy, real fast:</td>
-</tr>
-<tr class="even">
-<td><code>r qplot(mpg, # This is our variable (Column) data = mtcars, # This is our dataset geom = &quot;histogram&quot;, # Type of geometry (type of plot) binwidth = 5, # Number of bins fill = cyl.2, # Variable setting fill, categorical alpha = I(.5), # Alpha transparency main = &quot;Distribution of Time to Quarter-mile&quot;, xlab = &quot;Time (seconds)&quot;, ylab = &quot;Density&quot; )</code></td>
-</tr>
-<tr class="odd">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-41-1.png" /> Boxplot:</td>
-</tr>
-<tr class="even">
-<td><code>r qplot(cyl.2, qsec, # Set x and y. data = mtcars, # Our dataframe, so x and why can reference geom = c(&quot;boxplot&quot;), fill = cyl.2, # Since this is a factor, it assumes categorical main = &quot;Speed and Cylinders&quot;, xlab = &quot;&quot;, # Empty ylab = &quot;Time to Quarter Mile (sec)&quot; )</code></td>
-</tr>
-<tr class="odd">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-42-1.png" /></td>
-</tr>
-<tr class="even">
-<td>It's interesting to compare these to the plots we made above. Let's take a look at our scatterplot, and then what <em>qqplot</em> spits out.</td>
-</tr>
-<tr class="odd">
-<td>```r ############# Scatterplot repeated from above plot(mtcars<span class="math inline"><em>h</em><em>p</em>, <em>m</em><em>t</em><em>c</em><em>a</em><em>r</em><em>s</em></span>mpg, pch= 19, # Change type of point col = c(&quot;#00008B96&quot;, &quot;#00640096&quot;, &quot;#8B000096&quot;)[unclass(mtcars$cyl.2)], #Semi-transparent colors, assigned per cyl.2 type main =&quot;Horsepower versus Fuel Efficiency&quot;, col.main = &quot;steelblue&quot;, cex.main = 1.5, # Increase size xlab = &quot;Horsepower&quot;, # x label ylab = &quot;Miles per Gallon&quot;, # y label font.lab = 2 # make bold )</td>
-</tr>
-<tr class="even">
-<td>legend(&quot;topright&quot;, # Location (can also be x, y) legend = c(&quot;Four&quot;,&quot;Six&quot;, &quot;Eight&quot;), # Labels col = c(&quot;#00008B96&quot;, &quot;#00640096&quot;, &quot;#8B000096&quot;), # Same colors as above pch = 19, bty = &quot;n&quot;, # Remove box around legend title = &quot;Number of Cylinders&quot;, title.col = &quot;gray40&quot;, cex = 1) # Make a little bigger ```</td>
-</tr>
-<tr class="odd">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-43-1.png" /></td>
-</tr>
-<tr class="even">
-<td>```r #############</td>
-</tr>
-<tr class="odd">
-<td># qqplot Scatterplot qplot(hp, mpg, data = mtcars, shape = cyl.2, # Varies with categorical variable (factor) color = cyl.2, # Varies with categorical variable (factor) size=I(3), # I is relative to default (so *3 here) main =&quot;Horsepower versus Fuel Efficiency&quot;, xlab=&quot;Horsepower&quot;, ylab=&quot;Miles per Gallon&quot; ) ```</td>
-</tr>
-<tr class="even">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-43-2.png" /></td>
-</tr>
-<tr class="odd">
-<td><em>qqplot</em> is fast, but it is not very flexible. For example, on the histogram, you cannot alter the fill or add an outline to the bars. This brings us to just touch ong the real power of ggplot. We don't have much to spend on this unfortunately, there are numerous references that can help you get started, such as this amazing <a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf">cheat sheet</a></td>
-</tr>
-<tr class="even">
-<td>By far the most important thing to notice is that ggplot constructs plots using multiple functions as a matter of course, and that the initial function often does nothing but define the plot area, with subsequent functions adding on the actual representations (lines, bars, colors, etc.)</td>
-</tr>
-<tr class="odd">
-<td>So we create a canvas based off our data, then &quot;add&quot; the histogram:</td>
-</tr>
-<tr class="even">
-<td><code>r ggplot(NULL, aes(x = mtcars$qsec)) + geom_histogram() # Create the graphic (with data from above)</code></td>
-</tr>
-<tr class="odd">
-<td><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></td>
-</tr>
-<tr class="even">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-44-1.png" /></td>
-</tr>
-<tr class="odd">
-<td>Here's what it looks like with some aesthetic modifications, and the addition of a density plot.</td>
-</tr>
-<tr class="even">
-<td><code>r ggplot(NULL, aes(x = mtcars$qsec)) + geom_histogram(fill = &quot;white&quot;, color = &quot;black&quot;) + # Simple aesthetics geom_density(color = &quot;blue&quot;)</code></td>
-</tr>
-<tr class="odd">
-<td><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></td>
-</tr>
-<tr class="even">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-45-1.png" /></td>
-</tr>
-<tr class="odd">
-<td>Scatterplot:</td>
-</tr>
-<tr class="even">
-<td><code>r ggplot(mtcars, aes(x = hp, y = mpg, # x and y shape = cyl.2, # Change shape according to cyl.2 color = cyl.2)) + # Change color according to cyl.2 geom_point(size = 3) + # Create points geom_rug () + # Rug plot geom_smooth(alpha = .2) # regressiony</code></td>
-</tr>
-<tr class="odd">
-<td><code>## `geom_smooth()` using method = 'loess'</code></td>
-</tr>
-<tr class="even">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-46-1.png" /></td>
-</tr>
-<tr class="odd">
-<td>Boxplot equivalent to the one above:</td>
-</tr>
-<tr class="even">
-<td><code>r ggplot(mtcars, aes( x = cyl.2, y = qsec)) + geom_boxplot(aes(fill = cyl.2)) + # Create boxplot, fill by cyl.2 ylab(&quot;Time to Quarter Mile (sec)&quot;)+ xlab(&quot;&quot;)+ scale_fill_discrete(name = &quot;Cylinders&quot;) + # Legend label ggtitle(&quot;Speed and Cylinders&quot;)</code></td>
-</tr>
-<tr class="odd">
-<td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-47-1.png" /></td>
-</tr>
-</tbody>
-</table>
+Okay let's take a brief dip into *ggplot*, which is widely used as it offers some advantages over R's default plotting in terms of customization. The downside is that it takes a fairly different approach to actually creating graphs which is much more layer-based, which can be somewhat mind-bending. Today we're going to start by recreating some of the graphs we have completed above using the *qplot()* (quick plot) function, based off those found [here](http://www.statmethods.net/advgraphs/ggplot2.html).
+
+``` r
+rm(mpg) # Remove object since it has conflicting name
+
+# install.packages("ggplot2")
+library(ggplot2)
+
+# Quickest plot
+qplot(mpg, data = mtcars) # Assumes histogram, note tip in console
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-40-1.png) This can get real fancy, real fast:
+
+``` r
+qplot(mpg, # This is our variable (Column)
+      data = mtcars, # This is our dataset
+      geom = "histogram", # Type of geometry (type of plot)
+      binwidth = 5, # Number of bins
+      fill = cyl.2, # Variable setting fill, categorical
+      alpha = I(.5), # Alpha transparency
+      main = "Distribution of Time to Quarter-mile", 
+      xlab = "Time (seconds)", 
+      ylab = "Density"
+      )
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-41-1.png) Boxplot:
+
+``` r
+qplot(cyl.2, qsec, # Set x and y.
+      data = mtcars, # Our dataframe, so x and why can reference
+      geom = c("boxplot"), 
+      fill = cyl.2, # Since this is a factor, it assumes categorical
+      main = "Speed and Cylinders",
+      xlab = "", # Empty
+      ylab = "Time to Quarter Mile (sec)"
+      )
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-42-1.png)
+
+It's interesting to compare these to the plots we made above. Let's take a look at our scatterplot, and then what *qqplot* spits out.
+
+``` r
+############# Scatterplot repeated from above
+plot(mtcars$hp, mtcars$mpg,
+     pch= 19, # Change type of point
+     col = c("#00008B96", "#00640096", "#8B000096")[unclass(mtcars$cyl.2)], #Semi-transparent colors, assigned per cyl.2 type
+     main ="Horsepower versus Fuel Efficiency",
+     col.main = "steelblue",
+     cex.main = 1.5, # Increase size
+     xlab = "Horsepower", # x label
+     ylab = "Miles per Gallon", # y label 
+     font.lab = 2 # make bold
+     ) 
+
+legend("topright", # Location (can also be x, y)
+       legend = c("Four","Six", "Eight"), # Labels
+       col = c("#00008B96", "#00640096", "#8B000096"), # Same colors as above
+       pch = 19,
+       bty = "n", # Remove box around legend
+       title = "Number of Cylinders",
+       title.col = "gray40",
+       cex = 1) # Make a little bigger
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-43-1.png)
+
+``` r
+#############
+
+# qqplot Scatterplot
+qplot(hp, mpg, 
+      data = mtcars, 
+      shape = cyl.2, # Varies with categorical variable (factor)
+      color = cyl.2, # Varies with categorical variable (factor)
+      size=I(3), # I is relative to default (so *3 here)
+      main ="Horsepower versus Fuel Efficiency",
+      xlab="Horsepower", 
+      ylab="Miles per Gallon"
+      ) 
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-43-2.png)
+
+*qqplot* is fast, but it is not very flexible. For example, on the histogram, you cannot alter the fill or add an outline to the bars. This brings us to just touch ong the real power of ggplot. We don't have much to spend on this unfortunately, there are numerous references that can help you get started, such as this amazing [cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
+
+By far the most important thing to notice is that ggplot constructs plots using multiple functions as a matter of course, and that the initial function often does nothing but define the plot area, with subsequent functions adding on the actual representations (lines, bars, colors, etc.)
+
+So we create a canvas based off our data, then "add" the histogram:
+
+``` r
+ggplot(NULL, aes(x = mtcars$qsec)) +
+  geom_histogram() # Create the graphic (with data from above)
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-44-1.png)
+
+Here's what it looks like with some aesthetic modifications, and the addition of a density plot.
+
+``` r
+ggplot(NULL, aes(x = mtcars$qsec)) + 
+  geom_histogram(fill = "white", color = "black") + # Simple aesthetics
+  geom_density(color = "blue")
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-45-1.png)
+
+Scatterplot:
+
+``` r
+ggplot(mtcars, aes(x = hp, y = mpg, # x and y
+                   shape = cyl.2, # Change shape according to cyl.2
+                   color = cyl.2)) + # Change color according to cyl.2
+  geom_point(size = 3) + # Create points
+  geom_rug () + # Rug plot
+  geom_smooth(alpha = .2) # regressiony
+```
+
+    ## `geom_smooth()` using method = 'loess'
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-46-1.png)
+
+Boxplot equivalent to the one above:
+
+``` r
+ggplot(mtcars, aes( x = cyl.2, y = qsec)) + 
+  geom_boxplot(aes(fill = cyl.2)) + # Create boxplot, fill by cyl.2
+  ylab("Time to Quarter Mile (sec)")+
+  xlab("")+
+  scale_fill_discrete(name = "Cylinders") + # Legend label
+  ggtitle("Speed and Cylinders")
+```
+
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-47-1.png)
+---------------------------------------------------------------------------------------
 
 Mapping
 =======
@@ -1043,7 +1076,7 @@ plot(blocks,
      )
 
 # choropleth maps attributes held in SpatialPolygons DataFrame (e.g., 'blocks')
-choro.legend(px = 533000, py = 171000, 
+choro.legend(px = 533000, py = 167000, 
              sh = shades.blue,
              border = "#FFFFFF80", # Semitransparent white around boxes
              bg = NA, # No background color,
@@ -1075,7 +1108,7 @@ plot(blocks,
      border = add.alpha("#000000", .15) # partly transparent black
      )
 
-choro.legend(px = 533000, py = 171000, 
+choro.legend(px = 533000, py = 167000, 
              sh = shades.yell,
              border = NA,
              bg = NA, # No background color,
@@ -1108,7 +1141,7 @@ plot(blocks,
      col = NA, 
      border = add.alpha("#FFFFFF", .2))
 
-choro.legend(px = 533000, py = 171000, 
+choro.legend(px = 533000, py = 167000, 
              sh = shades.blue, 
              border = "#FFFFFF80", 
              bg = NA, bty = "n", 
@@ -1132,7 +1165,7 @@ plot(blocks,
      col=NA, 
      border = "gray15" ) # Alpha not working on second plot??
 
-choro.legend(px = 533000, py = 171000, 
+choro.legend(px = 533000, py = 167000, 
              sh = shades.yell, 
              border = NA, 
              bg = NA, 
@@ -1638,7 +1671,7 @@ choropleth(murica.spdf, murica.spdf$POPDENS, pop.dens.shades, border = "gray10")
 
 # Using the title function separately gives you more options 
 
-title("Density of 'Muricans", line = -2, col.main = "gray20", cex.main = 2) 
+title("Density of 'Muricans", line = -1, col.main = "gray20", cex.main = 2) 
 
 choro.legend(-125.5, 29.5, pop.dens.shades, bty ="n",  title = "Folks per Square Mile") # Placed manually, use our shades array, and remove legend box
 ```
@@ -1719,7 +1752,7 @@ title("Density of 'Muricans",
       cex.main = 2) # Create title, move it down two lines, make it gray, make it bigger (cex)
 
 #Note that since the coordinate system changed, we need to change our legend coordinates:
-choro.legend(-2250000, -1543980, 
+choro.legend(-2250000, -1443980, 
              border = "gray10",
              pop.dens.shades, 
              bty ="n",  
@@ -1741,7 +1774,7 @@ Unfortunately, depending on various projections, it can be somewhat difficult to
 
 ``` r
 #install.packages("ggmap")
-#install.packages("mapproj")
+
 library(ggmap)
 
 USA <- get_map(location = "United States", zoom = 3) # Create a map and store it
@@ -1764,10 +1797,10 @@ ggmap(USA) # Plot it! (begin eagle tears)
 *ggmap* is quite flexible with input, since it's based on Google Maps:
 
 ``` r
-PA <- get_map(location = "Pennsylvania", zoom = 8) # Hey I know that place!
+PA <- get_map(location = "Pennsylvania", zoom = 7) # Hey I know that place!
 ```
 
-    ## Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=Pennsylvania&zoom=8&size=640x640&scale=2&maptype=terrain&language=en-EN&sensor=false
+    ## Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=Pennsylvania&zoom=7&size=640x640&scale=2&maptype=terrain&language=en-EN&sensor=false
 
     ## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Pennsylvania&sensor=false
 
@@ -1783,44 +1816,36 @@ You can change the source and type, which has some interestingly artistic option
 PA.2 <- get_map(location = "Pennsylvania", 
                 source = "stamen", # Change the source
                 maptype =  "watercolor", # Each source has different map types
-                zoom = 8 )
+                zoom = 7 )
 ```
 
-    ## Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=Pennsylvania&zoom=8&size=640x640&scale=2&maptype=terrain&sensor=false
+    ## Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=Pennsylvania&zoom=7&size=640x640&scale=2&maptype=terrain&sensor=false
 
     ## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Pennsylvania&sensor=false
 
-    ## Map from URL : http://tile.stamen.com/watercolor/8/71/94.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/7/35/46.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/8/72/94.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/7/36/46.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/8/73/94.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/7/37/46.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/8/74/94.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/7/35/47.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/8/71/95.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/7/36/47.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/8/72/95.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/7/37/47.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/8/73/95.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/7/35/48.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/8/74/95.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/7/36/48.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/8/71/96.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/7/37/48.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/8/72/96.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/7/35/49.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/8/73/96.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/7/36/49.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/8/74/96.jpg
-
-    ## Map from URL : http://tile.stamen.com/watercolor/8/71/97.jpg
-
-    ## Map from URL : http://tile.stamen.com/watercolor/8/72/97.jpg
-
-    ## Map from URL : http://tile.stamen.com/watercolor/8/73/97.jpg
-
-    ## Map from URL : http://tile.stamen.com/watercolor/8/74/97.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/7/37/49.jpg
 
 ``` r
 ggmap(PA.2) # Plot it
