@@ -3,8 +3,7 @@ R-Plotting-and-Mapping-Tutorial
 Mark Simpson
 January 30, 2017
 
-Meta-introduction: February 5, 2018
-===================================
+### Meta-introduction: February 5, 2018
 
 This tutorial was originally created for the [Geospatial Data Science 2017 workshop](https://sites.psu.edu/gds2017/), which I co-organized along with Dr. Eun-Kyeong Kim, and which was help February 3rd-5th, 2017 on the Penn State campus. It was originally given as part of a live tutorial. I have slightly updated the formatting, but it is presented as-is.
 
@@ -25,7 +24,7 @@ Working with Color
 
 Color is fundamental to making usable, understandable, and beautiful visualizations, and is where we are going to start.
 
-Before we can mess with color, we need some graphic, and to get a graphic, it'd be best to get some data. So, we will load in a built-in dataset within R called *mtcars* (car statistics, details (here)\[<http://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html>\], and extract some values to then graph.
+Before we can mess with color, we need some graphic, and to get a graphic, it'd be best to get some data. So, we will load in a built-in dataset within R called *mtcars* (car statistics, details [here](http://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html), and extract some values to then graph.
 
 ``` r
 rm(list = ls()) # Clear environment
@@ -81,7 +80,7 @@ barplot(mpg) # More specific function
 
 ![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
-There are several different ways to specify color manually, but R also has a predefined list of colors that you can call by name. While you can look this up within R, the easiest way is to use an external reference, such as this cheat (sheet)\[<http://research.stowers-institute.org/efg/R/Color/Chart/ColorChart.pdf>\].
+There are several different ways to specify color manually, but R also has a predefined list of colors that you can call by name. While you can look this up within R, the easiest way is to use an external reference, such as this [cheat sheet](http://research.stowers-institute.org/efg/R/Color/Chart/ColorChart.pdf).
 
 ``` r
 # colors() # All named colors in R
@@ -215,7 +214,7 @@ barplot(mpg, col = cm.colors(6))
 
 While these built-in colors are useful, they are not necessarily pretty, easily printable, or color-blind friendly. Luckily, someone has already created a fantastic set up colors tailored to data visualization.
 
-*RColorBrewer* is based off of the tool (Color Brewer)\[<http://colorbrewer2.org/>\], created by Dr. Cindy Brewer, head of the PSU Department of Geography, and a classy lady. Originally conceived for maps, it is very useful for all kinds of data, as we shall see.
+*RColorBrewer* is based off of the tool [Color Brewer](http://colorbrewer2.org/), created by Dr. Cindy Brewer, head of the PSU Department of Geography, and a classy lady. Originally conceived for maps, it is very useful for all kinds of data, as we shall see.
 
 ``` r
 # install.packages("RColorBrewer")
@@ -338,7 +337,7 @@ barplot(cyl.table,
 "Par()
 ------
 
-As you can see, our graph is neat, but our labels are a little too close to the edges. These and many options like these are contained not with individual plot functions, but within the plotting system itself, which can be set by using the *par()* (parameters) function. A good description of many of thehttp://www.statmethods.net/advgraphs/parameters.html can be found at Quick-R (here)\[<http://www.statmethods.net/advgraphs/parameters.html>\].
+As you can see, our graph is neat, but our labels are a little too close to the edges. These and many options like these are contained not with individual plot functions, but within the plotting system itself, which can be set by using the *par()* (parameters) function. A good description of many of them can be found [at Quick-R](http://www.statmethods.net/advgraphs/parameters.html).
 
 *par()* is great if you need to pump out a bunch of graphs since you only need to change them once. On the other hand, it can be slightly annoying because there is no built-in way to restore the default values, so it's best to store them in a variable.
 
@@ -389,7 +388,7 @@ Helper Functions
 
 However, not everything is contained within *par()*, and if you need to get even more particular, there are specialized functions for different graph elements. For example, the color of the tick marks themselves. To change these, we can construct a custom axis using the *axis()* function, which operates on a pre-constructed plot, ideally one without axes, which we can do by suppressing those options. Similarly, we can not specify a title and create one with the *title()* function.
 
-Other examples include adding text annotations, adding reference lines (such as a global average), and a legend which explains visual attributes like colors (important for maps). More information can be found (here)\[<http://www.statmethods.net/advgraphs/axes.html>\].
+Other examples include adding text annotations, adding reference lines (such as a global average), and a legend which explains visual attributes like colors (important for maps). [More information can be found here](http://www.statmethods.net/advgraphs/axes.html).
 
 But for now, title and axis:
 
@@ -465,7 +464,9 @@ text(18.7, 12, labels ="Mean", col = "turquoise4") # Note the different x, y
 lines(density(mtcars$qsec), col = "darkred", lwd = 2) # Kernel density line
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-27-1.png) \#\# Boxplots
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-27-1.png)
+
+### Boxplots
 
 Boxplots are THE statistical graphs. So let's make some. We can make a boxplot for that qsec (time to a quarter mile) variable...
 
@@ -708,82 +709,82 @@ dev.off()  # Close "device" (end writing)
 <td># Scratching Surface of ggplot</td>
 </tr>
 <tr class="even">
-<td>Okay let's take a brief dip into <em>ggplot</em>, which is widely used as it offers some advantages over R's default plotting in terms of customization. The downside is that it takes a fairly different approach to actually creating graphs which is much more layer-based, which can be somewhat mind-bending. Today we're going to start by recreating some of the graphs we have completed above using the <em>qplot()</em> (quick plot) function, based off those found (here)[<a href="http://www.statmethods.net/advgraphs/ggplot2.html" class="uri">http://www.statmethods.net/advgraphs/ggplot2.html</a>].</td>
+<td>Okay let's take a brief dip into <em>ggplot</em>, which is widely used as it offers some advantages over R's default plotting in terms of customization. The downside is that it takes a fairly different approach to actually creating graphs which is much more layer-based, which can be somewhat mind-bending. Today we're going to start by recreating some of the graphs we have completed above using the <em>qplot()</em> (quick plot) function, based off those found <a href="http://www.statmethods.net/advgraphs/ggplot2.html">here</a>.</td>
 </tr>
 <tr class="odd">
 <td>```r rm(mpg) # Remove object since it has conflicting name</td>
 </tr>
 <tr class="even">
-<td># install.packages(&quot;ggplot2&quot;) library(ggplot2) ```</td>
+<td># install.packages(&quot;ggplot2&quot;) library(ggplot2)</td>
 </tr>
 <tr class="odd">
-<td><code>## Warning: package 'ggplot2' was built under R version 3.4.3</code></td>
+<td># Quickest plot qplot(mpg, data = mtcars) # Assumes histogram, note tip in console ```</td>
 </tr>
 <tr class="even">
-<td><code>r # Quickest plot qplot(mpg, data = mtcars) # Assumes histogram, note tip in console</code></td>
-</tr>
-<tr class="odd">
 <td><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-40-1.png" /> This can get real fancy, real fast:</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>r qplot(mpg, # This is our variable (Column) data = mtcars, # This is our dataset geom = &quot;histogram&quot;, # Type of geometry (type of plot) binwidth = 5, # Number of bins fill = cyl.2, # Variable setting fill, categorical alpha = I(.5), # Alpha transparency main = &quot;Distribution of Time to Quarter-mile&quot;, xlab = &quot;Time (seconds)&quot;, ylab = &quot;Density&quot; )</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-41-1.png" /> Boxplot:</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>r qplot(cyl.2, qsec, # Set x and y. data = mtcars, # Our dataframe, so x and why can reference geom = c(&quot;boxplot&quot;), fill = cyl.2, # Since this is a factor, it assumes categorical main = &quot;Speed and Cylinders&quot;, xlab = &quot;&quot;, # Empty ylab = &quot;Time to Quarter Mile (sec)&quot; )</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-42-1.png" /></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>It's interesting to compare these to the plots we made above. Let's take a look at our scatterplot, and then what <em>qqplot</em> spits out.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>```r ############# Scatterplot repeated from above plot(mtcars<span class="math inline"><em>h</em><em>p</em>, <em>m</em><em>t</em><em>c</em><em>a</em><em>r</em><em>s</em></span>mpg, pch= 19, # Change type of point col = c(&quot;#00008B96&quot;, &quot;#00640096&quot;, &quot;#8B000096&quot;)[unclass(mtcars$cyl.2)], #Semi-transparent colors, assigned per cyl.2 type main =&quot;Horsepower versus Fuel Efficiency&quot;, col.main = &quot;steelblue&quot;, cex.main = 1.5, # Increase size xlab = &quot;Horsepower&quot;, # x label ylab = &quot;Miles per Gallon&quot;, # y label font.lab = 2 # make bold )</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>legend(&quot;topright&quot;, # Location (can also be x, y) legend = c(&quot;Four&quot;,&quot;Six&quot;, &quot;Eight&quot;), # Labels col = c(&quot;#00008B96&quot;, &quot;#00640096&quot;, &quot;#8B000096&quot;), # Same colors as above pch = 19, bty = &quot;n&quot;, # Remove box around legend title = &quot;Number of Cylinders&quot;, title.col = &quot;gray40&quot;, cex = 1) # Make a little bigger ```</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-43-1.png" /></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>```r #############</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td># qqplot Scatterplot qplot(hp, mpg, data = mtcars, shape = cyl.2, # Varies with categorical variable (factor) color = cyl.2, # Varies with categorical variable (factor) size=I(3), # I is relative to default (so *3 here) main =&quot;Horsepower versus Fuel Efficiency&quot;, xlab=&quot;Horsepower&quot;, ylab=&quot;Miles per Gallon&quot; ) ```</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-43-2.png" /></td>
 </tr>
-<tr class="even">
-<td><em>qqplot</em> is fast, but it is not very flexible. For example, on the histogram, you cannot alter the fill or add an outline to the bars. This brings us to just touch ong the real power of ggplot. We don't have much to spend on this unfortunately, there are numerous references that can help you get started, such as this amazing (cheat sheet)[<a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf" class="uri">https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf</a>]</td>
-</tr>
 <tr class="odd">
+<td><em>qqplot</em> is fast, but it is not very flexible. For example, on the histogram, you cannot alter the fill or add an outline to the bars. This brings us to just touch ong the real power of ggplot. We don't have much to spend on this unfortunately, there are numerous references that can help you get started, such as this amazing <a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf">cheat sheet</a></td>
+</tr>
+<tr class="even">
 <td>By far the most important thing to notice is that ggplot constructs plots using multiple functions as a matter of course, and that the initial function often does nothing but define the plot area, with subsequent functions adding on the actual representations (lines, bars, colors, etc.)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>So we create a canvas based off our data, then &quot;add&quot; the histogram:</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>r ggplot(NULL, aes(x = mtcars$qsec)) + geom_histogram() # Create the graphic (with data from above)</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-44-1.png" /></td>
 </tr>
+<tr class="odd">
+<td>Here's what it looks like with some aesthetic modifications, and the addition of a density plot.</td>
+</tr>
 <tr class="even">
-<td><code>r ggplot(NULL, aes(x = mtcars$qsec)) + geom_histogram(fill = &quot;white&quot;, color = &quot;black&quot;) + # Simple aesthetics geom_density(color = &quot;blue&quot;) + geom_area(stat = &quot;bin&quot;, alpha = .1, fill = &quot;blue&quot;)</code></td>
+<td><code>r ggplot(NULL, aes(x = mtcars$qsec)) + geom_histogram(fill = &quot;white&quot;, color = &quot;black&quot;) + # Simple aesthetics geom_density(color = &quot;blue&quot;)</code></td>
 </tr>
 <tr class="odd">
-<td><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`. ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></td>
+<td><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></td>
 </tr>
 <tr class="even">
 <td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-45-1.png" /></td>
@@ -796,30 +797,6 @@ dev.off()  # Close "device" (end writing)
 </tr>
 <tr class="odd">
 <td><code>## `geom_smooth()` using method = 'loess'</code></td>
-</tr>
-<tr class="even">
-<td><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = ## parametric, : pseudoinverse used at 104.65</code></td>
-</tr>
-<tr class="odd">
-<td><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = ## parametric, : neighborhood radius 18.35</code></td>
-</tr>
-<tr class="even">
-<td><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = ## parametric, : reciprocal condition number 5.5839e-017</code></td>
-</tr>
-<tr class="odd">
-<td><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = ## parametric, : There are other near singularities as well. 4270.6</code></td>
-</tr>
-<tr class="even">
-<td><code>## Warning in predLoess(object$y, object$x, newx = if ## (is.null(newdata)) object$x else if (is.data.frame(newdata)) ## as.matrix(model.frame(delete.response(terms(object)), : pseudoinverse used ## at 104.65</code></td>
-</tr>
-<tr class="odd">
-<td><code>## Warning in predLoess(object$y, object$x, newx = if ## (is.null(newdata)) object$x else if (is.data.frame(newdata)) ## as.matrix(model.frame(delete.response(terms(object)), : neighborhood radius ## 18.35</code></td>
-</tr>
-<tr class="even">
-<td><code>## Warning in predLoess(object$y, object$x, newx = if ## (is.null(newdata)) object$x else if (is.data.frame(newdata)) ## as.matrix(model.frame(delete.response(terms(object)), : reciprocal ## condition number 5.5839e-017</code></td>
-</tr>
-<tr class="odd">
-<td><code>## Warning in predLoess(object$y, object$x, newx = if ## (is.null(newdata)) object$x else if (is.data.frame(newdata)) ## as.matrix(model.frame(delete.response(terms(object)), : There are other ## near singularities as well. 4270.6</code></td>
 </tr>
 <tr class="even">
 <td><img src="GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-46-1.png" /></td>
@@ -848,7 +825,7 @@ These are decent ways to get reasonable maps of an area quickly, but what about 
 
 There are many different options for mapping, but we're going to focus on *GIStools*, which depends on several packages, including *maptools*, *rgdal*, and *sp*.
 
-This section is adapted from the book (An Introduction to R for Spatial Analysis and Mapping)\[<https://www.amazon.com/Introduction-Spatial-Analysis-Mapping/dp/1446272958>\].
+This section is largely based on sections from the book [An Introduction to R for Spatial Analysis and Mapping](https://www.amazon.com/Introduction-Spatial-Analysis-Mapping/dp/1446272958), by Chris Brundson and Lex Comber. Chris Brundson is one of the authors of the GIStools package.
 
 ``` r
 rm(list= ls()) # Clear environment
@@ -858,8 +835,6 @@ rm(list= ls()) # Clear environment
 
 library(GISTools, suppressPackageStartupMessages("True")) # Lead package without oodles of messages
 ```
-
-    ## Warning: package 'GISTools' was built under R version 3.4.3
 
     ## Loading required package: maptools
 
@@ -926,48 +901,28 @@ class(blocks) # SpatialPolygonsDataFrame
 
 ``` r
 # head(blocks) # This is a MESS
-head(data.frame(blocks)) # Coerce to dataframe first
+# head(data.frame(blocks)) # Coerce to dataframe first
 ```
 
-    ##   NEWH075H_ NEWH075H_I HSE_UNITS OCCUPIED VACANT  P_VACANT P_OWNEROCC
-    ## 0         2         69       763      725     38  4.980341   0.393185
-    ## 1         3         72       510      480     30  5.882353  20.392157
-    ## 2         4         64       389      362     27  6.940874  57.840617
-    ## 3         5         68       429      397     32  7.459207  19.813520
-    ## 4         6         67       443      385     58 13.092551  80.361174
-    ## 5         7        133       588      548     40  6.802721  52.551020
-    ##   P_RENTROCC NEWH075P_ NEWH075P_I POP1990  P_MALES P_FEMALES   P_WHITE
-    ## 0  94.626474         2        380    2396 40.02504  59.97496  7.095159
-    ## 1  73.725490         3        385    3071 39.07522  60.92478 87.105177
-    ## 2  35.218509         4        394     996 47.38956  52.61044 32.931727
-    ## 3  72.727273         5        399    1336 42.66467  57.33533 11.452096
-    ## 4   6.546275         6        404     915 46.22951  53.77049 73.442623
-    ## 5  40.646259         7        406    1318 50.91047  49.08953 87.784522
-    ##     P_BLACK P_AMERI_ES P_ASIAN_PI  P_OTHER  P_UNDER5    P_5_13  P_14_17
-    ## 0 87.020033   0.584307   0.041736 5.258765 12.813022 24.707846 7.888147
-    ## 1 10.452621   0.195376   0.521003 1.725822  1.921198  2.474764 0.814067
-    ## 2 66.265060   0.100402   0.200803 0.502008 10.441767 13.554217 5.722892
-    ## 3 85.553892   0.523952   0.523952 1.946108 10.853293 17.739521 7.709581
-    ## 4 24.371585   0.327869   1.420765 0.437158  6.229508  8.633880 2.950820
-    ## 5  7.435508   0.758725   0.834598 3.186646  8.725341  8.194234 3.641882
-    ##     P_18_24   P_25_34   P_35_44  P_45_54  P_55_64   P_65_74   P_75_UP
-    ## 0 12.479132 16.026711  8.555927 5.759599 4.924875  4.048414  2.796327
-    ## 1 71.149463  7.359166  4.037773 1.595571 1.758385  3.712146  5.177467
-    ## 2  8.835341 17.670683 17.871486 8.734940 5.923695  7.931727  3.313253
-    ## 3 12.425150 18.113772 10.853293 9.056886 6.287425  4.266467  2.694611
-    ## 4  7.103825 17.267760 16.830601 8.415301 7.431694 14.426230 10.710383
-    ## 5 10.091047 29.286798 12.898331 7.814871 7.814871  6.904401  4.628225
-
-The major difference in plotting map elements with *plot()* is that **add = TRUE** is much more common. The idea of layers isn't exactly new for GISers (pronounce as "Jizzers" to annoy them), but might take some getting used to for others. Let's make a quick crime map
+The major difference in plotting map elements with *plot()* is that **add = TRUE** is much more common. The idea of layers isn't exactly new for GISers (pronounce as "Jizzers" to annoy them), but might take some getting used to for others. Let's make a quick crime map using [R colors](http://research.stowers-institute.org/efg/R/Color/Chart/ColorChart.pdf).
 
 ``` r
-#browseURL("http://research.stowers-institute.org/efg/R/Color/Chart/ColorChart.pdf")
+# Plot the 'lowest' first.
+plot(blocks, 
+     lwd = 0.5, 
+     col = "darkseagreen1", 
+     border = "white") 
 
-plot(blocks, lwd = 0.5, col = "darkseagreen1", border = "white") # Plot the 'lowest' first.
+# Roads on top
+plot(roads, 
+     add = TRUE, 
+     col = "slategray3") 
 
-plot(roads, add = TRUE, col = "slategray3") # Roads on top
-
-plot(breach, pch = 17, add = TRUE, col =add.alpha("#EE2C2C", .7)) # Add transparency
+# Add points
+plot(breach, 
+     pch = 17, 
+     add = TRUE, 
+     col =add.alpha("#EE2C2C", .7)) # Add transparency
 ```
 
 ![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-53-1.png)
@@ -977,10 +932,21 @@ The *Locator* function lets you interact directly with the plot. You click withi
 To use it, you run the command, then you select points within the plot (however many you want), and then hit ESC. It will return the coordinates to the console, which you can then use to create a polygon.
 
 ``` r
-# locator() # Get Coordinates (commented for markdown)
-plot(blocks, lwd = 0.5, col = "cornsilk", border = "antiquewhite2")
-plot(roads, add = TRUE, col = "slategray3") 
-plot(breach, pch = 20, add = TRUE, col ="red")
+# locator() # Get Coordinates in R studio (commented for markdown)
+
+plot(blocks, 
+     lwd = 0.5, 
+     col = "cornsilk", 
+     border = "antiquewhite2")
+
+plot(roads, 
+     add = TRUE, 
+     col = "slategray3") 
+
+plot(breach, 
+     pch = 20, 
+     add = TRUE, 
+     col ="red")
 
 # Add a scale bar, if you're into that
 map.scale(xc = 540000, yc = 152000, # Position on map, in map units
@@ -1077,7 +1043,7 @@ plot(blocks,
      )
 
 # choropleth maps attributes held in SpatialPolygons DataFrame (e.g., 'blocks')
-choro.legend(px = 533000, py = 161000, 
+choro.legend(px = 533000, py = 171000, 
              sh = shades.blue,
              border = "#FFFFFF80", # Semitransparent white around boxes
              bg = NA, # No background color,
@@ -1109,7 +1075,7 @@ plot(blocks,
      border = add.alpha("#000000", .15) # partly transparent black
      )
 
-choro.legend(px = 533000, py = 161000, 
+choro.legend(px = 533000, py = 171000, 
              sh = shades.yell,
              border = NA,
              bg = NA, # No background color,
@@ -1131,46 +1097,57 @@ o.par <- par(no.readonly = FALSE)
 par(mfrow = c (1,2), mar = c(1,0,1,0)) # mar =bottom, left, top, right
 
 # Vacant Map
-choropleth(blocks, v = blocks$P_VACANT, shading = shades.blue, bg = "gray30", border = NA) 
+choropleth(blocks, 
+           v = blocks$P_VACANT, 
+           shading = shades.blue, 
+           bg = "gray30", 
+           border = NA) 
 
-plot(blocks, add = TRUE, col = NA, border = add.alpha("#FFFFFF", .2))
+plot(blocks, 
+     add = TRUE, 
+     col = NA, 
+     border = add.alpha("#FFFFFF", .2))
 
-choro.legend(px = 533000, py = 161000, sh = shades.blue, border = "#FFFFFF80", bg = NA, bty = "n", text.col = "red", title.col = "white")
+choro.legend(px = 533000, py = 171000, 
+             sh = shades.blue, 
+             border = "#FFFFFF80", 
+             bg = NA, bty = "n", 
+             text.col = "red", 
+             title.col = "white")
 
-title(main = "Percent Vacant", col.main = "white", line = -1)
+title(main = "Percent Vacant", 
+      col.main = "white", 
+      line = -1)
+
+# Second map, owner-occupied
+
+choropleth(blocks, 
+           blocks$P_OWNEROCC, 
+           shading = shades.yell, 
+           bg = "gray30", 
+           border = NA) 
+
+plot(blocks, 
+     add = TRUE, 
+     col=NA, 
+     border = "gray15" ) # Alpha not working on second plot??
+
+choro.legend(px = 533000, py = 171000, 
+             sh = shades.yell, 
+             border = NA, 
+             bg = NA, 
+             bty = "n" )
+
+title(main = "Percent Owner Occupied", 
+      col.main = "white", 
+      line = -1)
 ```
 
 ![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-57-1.png)
 
-Owner Occupied Map:
-
-``` r
-choropleth(blocks, blocks$P_OWNEROCC, shading = shades.yell, bg = "gray30", border = NA) 
-
-plot(blocks, add = TRUE, col=NA, border = "gray15" ) # Alpha not working on second plot??
-
-choro.legend(px = 533000, py = 161000, sh = shades.yell, border = NA, bg = NA, bty = "n" )
-
-title(main = "Percent Owner Occupied", col.main = "white", line = -1)
-```
-
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-58-1.png)
-
 ``` r
 par(o.par)
 ```
-
-    ## Warning in par(o.par): graphical parameter "cin" cannot be set
-
-    ## Warning in par(o.par): graphical parameter "cra" cannot be set
-
-    ## Warning in par(o.par): graphical parameter "csi" cannot be set
-
-    ## Warning in par(o.par): graphical parameter "cxy" cannot be set
-
-    ## Warning in par(o.par): graphical parameter "din" cannot be set
-
-    ## Warning in par(o.par): graphical parameter "page" cannot be set
 
 Raster in a Minute
 ==================
@@ -1216,27 +1193,19 @@ head(data.frame(breach.dens)) # Note the kde values added
     ## 5 3.115218e-34 532493.6 147854
     ## 6 4.516606e-34 532684.0 147854
 
+Then we need to convert to a different format for plotting.
+
 ``` r
 breach.dense.grid <- as(breach.dens, "SpatialGridDataFrame") # Use 'as' to coerce into SpatialGridDataFrame (raster)
 
-head(data.frame(breach.dense.grid)) # look at data
-```
+#head(data.frame(breach.dense.grid)) # same as above
 
-    ##            kde     Var1     Var2
-    ## 1 2.722636e-13 531731.9 188464.6
-    ## 2 3.455488e-13 531922.3 188464.6
-    ## 3 4.357233e-13 532112.7 188464.6
-    ## 4 5.459338e-13 532303.2 188464.6
-    ## 5 6.797505e-13 532493.6 188464.6
-    ## 6 8.411979e-13 532684.0 188464.6
-
-``` r
 image(breach.dense.grid, #Note the image() function for plotting
      col = colorRampPalette(brewer.pal(9, "Reds"))(100)
      )
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-60-1.png) So this is a raster "heatmap" of where breaches of the peace happen, but it doesn't have any context.
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-59-1.png) So this is a raster "heatmap" of where breaches of the peace happen, but it doesn't have any context.
 
 It would be nice if we could have a strong outline for the city, with lighter internal divisions, and not show anything outside the city. So, uh, let's do that. First, we need to create a masking polygon, then create an outline polygon, and then add the blocks, but with transparency.
 
@@ -1251,13 +1220,7 @@ blocks.outline <- gUnaryUnion(blocks, id = NULL)
 
 # This produces a warning; but they have the same proj4string?
 masker <- poly.outer(breach.dense.grid, blocks.outline) # Create mask for raster
-```
 
-    ## Warning in RGEOSBinTopoFunc(spgeom1, spgeom2, byid, id, drop_lower_td,
-    ## unaryUnion_if_byid_false, : spgeom1 and spgeom2 have different proj4
-    ## strings
-
-``` r
 plot(masker, 
      border = "white",
      col = "white",
@@ -1276,7 +1239,7 @@ plot(blocks.outline,
 title(main = "Breaches of the Peace Heatmap")
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-61-1.png)
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-60-1.png)
 ---------------------------------------------------------------------------------------
 
 Importing Shapefiles
@@ -1300,11 +1263,7 @@ First, some setup:
 # Probably already loaded through GISTools
 # library(rgdal) 
 suppressPackageStartupMessages(library(rgdal))
-```
 
-    ## Warning: package 'rgdal' was built under R version 3.4.3
-
-``` r
 rm(list=ls()) # Clear workspace
 
 # setwd() # Set working directory (or Session -> Set Working Directory -> To Source File Location)
@@ -1336,14 +1295,18 @@ class(murica) # What is this thing?
 
 Note that the type of data is *SpatialPolygonsDataFrame*, which means there is geometry (SpatialPolgyons), and attributes (DataFrame). This is important since these can be manipulated separately. For example, you can treat it like a regular data frame.
 
+Note that some basic functions fail due to the data structure:
+
 ``` r
-colnames(murica) # Note that some basic functions fail due to the data structure
+colnames(murica) 
 ```
 
     ## NULL
 
+You need to access the right "slot" with @, in this case "data":
+
 ``` r
-colnames(murica@data)[1:8] # You need to access the right "slot" with @, in this case "data"
+colnames(murica@data)[1:8] # 
 ```
 
     ## [1] "GEOID10"    "STUSPS10"   "NAME10"     "ALAND10"    "AWATER10"  
@@ -1355,28 +1318,13 @@ slotNames(murica)
 
     ## [1] "data"        "polygons"    "plotOrder"   "bbox"        "proj4string"
 
+But it can be treated like a dataframe in some ways:
+
 ``` r
-murica$NAME10 # But can be treated like a dataframe for some purposes
+murica$NAME10[1:5] # But can be treated like a dataframe for some purposes
 ```
 
-    ##  [1] Wyoming              Pennsylvania         Ohio                
-    ##  [4] New Mexico           Maryland             Rhode Island        
-    ##  [7] Oregon               Puerto Rico          Wisconsin           
-    ## [10] North Dakota         Nevada               Georgia             
-    ## [13] New York             Arkansas             Kansas              
-    ## [16] Nebraska             Utah                 Alaska              
-    ## [19] Mississippi          Oklahoma             West Virginia       
-    ## [22] Michigan             Colorado             New Jersey          
-    ## [25] Delaware             Montana              Washington          
-    ## [28] Connecticut          California           Kentucky            
-    ## [31] Massachusetts        Florida              Idaho               
-    ## [34] Missouri             Hawaii               Alabama             
-    ## [37] South Carolina       New Hampshire        South Dakota        
-    ## [40] Illinois             Tennessee            Indiana             
-    ## [43] Iowa                 Arizona              Minnesota           
-    ## [46] Louisiana            District of Columbia Virginia            
-    ## [49] Texas                Vermont              Maine               
-    ## [52] North Carolina      
+    ## [1] Wyoming      Pennsylvania Ohio         New Mexico   Maryland    
     ## 52 Levels: Alabama Alaska Arizona Arkansas California ... Wyoming
 
 ``` r
@@ -1387,6 +1335,8 @@ murica$NAME10[4] # Name of the fourth, best state
 
     ## [1] New Mexico
     ## 52 Levels: Alabama Alaska Arizona Arkansas California ... Wyoming
+
+One important attribute that you'll probably have to deal with is the projection information:
 
 ``` r
 murica@proj4string # This is the projection information, useful for later. Note "@"
@@ -1408,7 +1358,7 @@ That's great, but how about plotting it?
 plot(murica) 
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-66-1.png)
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-68-1.png)
 
 Playing with the visuals:
 
@@ -1417,7 +1367,7 @@ Playing with the visuals:
 plot(murica, col = "SlateBlue", border = NA) 
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-67-1.png)
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-69-1.png)
 ---------------------------------------------------------------------------------------
 
 Subsetting and Clipping Data
@@ -1430,27 +1380,15 @@ Subsetting using Attributes
 
 Subsetting by attribute is much easier than a spatial clip, so let's start with that. We can create an array of booleans that we can use to subset the SpatialPolygonsDataFrame based off the name of the states and territories we don't want. These are Alaska, Hawaii, and Puerto Rico.
 
-Note the use of logical operators (tips [here](http://www.statmethods.net/management/operators.html)). Super beginner stuff: Here, **!=** is "is not", and **&** is "and", so this reads more or less *"is this state name not Alaska, not Hawaii, and not Puerto Rico?"*
-
-``` r
-head(murica$NAME10) # This field contains the common names of the states
-```
-
-    ## [1] Wyoming      Pennsylvania Ohio         New Mexico   Maryland    
-    ## [6] Rhode Island
-    ## 52 Levels: Alabama Alaska Arizona Arkansas California ... Wyoming
+Note the use of logical operators (tips [here](http://www.statmethods.net/management/operators.html)). Review just in case: Here, **!=** is "is not", and **&** is "and", so this reads more or less *"is this state name not Alaska, not Hawaii, and not Puerto Rico?"*
 
 ``` r
 real.index <- murica$NAME10 != "Alaska" & murica$NAME10 != "Hawaii" & murica$NAME10 != "Puerto Rico" # Create bool list of "real" states
 
-real.index # Note the FALSE instances for those states/territories
+head(real.index) # Note the FALSE instances for those states/territories
 ```
 
-    ##  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
-    ## [12]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE
-    ## [23]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-    ## [34]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-    ## [45]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+    ## [1] TRUE TRUE TRUE TRUE TRUE TRUE
 
 ``` r
 murica.spdf <- murica[real.index,] # Subset using real.index
@@ -1458,7 +1396,7 @@ murica.spdf <- murica[real.index,] # Subset using real.index
 plot(murica.spdf) # Plot it!
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-68-1.png)
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-70-1.png)
 
 We can also make it look a little better while we're at it:
 
@@ -1470,7 +1408,7 @@ plot(murica.spdf,
      border = "white") 
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-69-1.png)
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-71-1.png)
 
 See? Not that hard. Now for spatial clipping...
 
@@ -1510,7 +1448,7 @@ Pls  <- Polygons(list(Pl), ID = ID) # Needs to be a list
 # ?SpatialPolygons
 clip.raw <- SpatialPolygons(list(Pls), proj4string = CRS(proj4string(murica)) ) # Note use of proj4string()
 
-## Let's take a look
+#Let's take a look
 
 plot(murica) 
 
@@ -1520,7 +1458,7 @@ plot(clip.raw,
      lwd = 2) #overlay (add) clipping polygon, red and line weight 2
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-70-1.png) Clipping strips SpatialPolygonDataFrames of their attributes, which means you need a mechanism to restore those attributes. Long story short, but you can maintain the IDs of the features, and use those to re-join the dataframe back to the SpatialPolygon. This is easier if the clipping feature is also a SpatialPolygonDataFrame.
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-72-1.png) Clipping strips SpatialPolygonDataFrames of their attributes, which means you need a mechanism to restore those attributes. Long story short, but you can maintain the IDs of the features, and use those to re-join the dataframe back to the SpatialPolygon. This is easier if the clipping feature is also a SpatialPolygonDataFrame.
 
 ``` r
 temp.df <- data.frame(value = 1, row.names = ID) # Create simple DF to add to SpatialPolgyon
@@ -1539,26 +1477,29 @@ Finally, we are now ready for the actual clip.
 ``` r
 # install.packages("GISTools")
 # library(GISTools) # Need GISTools Library
-# suppressPackageStartupMessages(library(GISTools))
 
 # ?gIntersection
 
 real.murica.sp  <-  gIntersection(clip.spdf, murica, byid = TRUE) # byid maintains the original IDs
 
-plot(real.murica.sp)# Neat! Too bad Michigan is all messed up.The census has some interesting feelings about lakes.
+plot(real.murica.sp)# 
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-72-1.png)
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-74-1.png)
+
+Neat! Too bad Michigan is all messed up. The census apparently has some interesting feelings about lakes.
+
+But if we take a look the object, it has no data, just geometry information!
 
 ``` r
-class(real.murica.sp) # But no data! (just SpatialPolygon)
+class(real.murica.sp) 
 ```
 
     ## [1] "SpatialPolygons"
     ## attr(,"package")
     ## [1] "sp"
 
-As you can see, the clip worked but there is no data. Unfortunately, there is no completely straightforward way of doing a clip on a SpatialDataFrame.
+As you can see, the clip worked but lost the non-spatial attributes. Unfortunately, there is no completely straightforward way of doing a clip on a SpatialDataFrame.
 
 What you have to do is subset get an array of the maintained polgyons and use that to subset the original dataframe, then re-join that dataframe to our new SpatialPolygons.
 
@@ -1574,92 +1515,19 @@ real.murica.sp@polygons[[1]]@ID # First polygon, ID field
 ``` r
 #sapply however lets us do this for all polygons at once.
 p.names <- sapply(real.murica.sp@polygons, function(x) x@ID) # Extracts names of polygons
-p.names # Check results
-```
+#p.names # Check results
 
-    ##  [1] "clip 0"  "clip 1"  "clip 2"  "clip 3"  "clip 4"  "clip 5"  "clip 6" 
-    ##  [8] "clip 8"  "clip 9"  "clip 10" "clip 11" "clip 12" "clip 13" "clip 14"
-    ## [15] "clip 15" "clip 16" "clip 18" "clip 19" "clip 20" "clip 21" "clip 22"
-    ## [22] "clip 23" "clip 24" "clip 25" "clip 26" "clip 27" "clip 28" "clip 29"
-    ## [29] "clip 30" "clip 31" "clip 32" "clip 33" "clip 35" "clip 36" "clip 37"
-    ## [36] "clip 38" "clip 39" "clip 40" "clip 41" "clip 42" "clip 43" "clip 44"
-    ## [43] "clip 45" "clip 46" "clip 47" "clip 48" "clip 49" "clip 50" "clip 51"
-
-``` r
 # Splitting the strings to get ID number
 
 # install.packages("stringr")
 library(stringr) # for the str_split_fixed
-```
 
-    ## Warning: package 'stringr' was built under R version 3.4.3
-
-``` r
 p.names.2 <- str_split_fixed(p.names, " ", n = 2) # Split p.names using a space, return two columns
-p.names.2 #Check results
-```
+#p.names.2 #Check results
 
-    ##       [,1]   [,2]
-    ##  [1,] "clip" "0" 
-    ##  [2,] "clip" "1" 
-    ##  [3,] "clip" "2" 
-    ##  [4,] "clip" "3" 
-    ##  [5,] "clip" "4" 
-    ##  [6,] "clip" "5" 
-    ##  [7,] "clip" "6" 
-    ##  [8,] "clip" "8" 
-    ##  [9,] "clip" "9" 
-    ## [10,] "clip" "10"
-    ## [11,] "clip" "11"
-    ## [12,] "clip" "12"
-    ## [13,] "clip" "13"
-    ## [14,] "clip" "14"
-    ## [15,] "clip" "15"
-    ## [16,] "clip" "16"
-    ## [17,] "clip" "18"
-    ## [18,] "clip" "19"
-    ## [19,] "clip" "20"
-    ## [20,] "clip" "21"
-    ## [21,] "clip" "22"
-    ## [22,] "clip" "23"
-    ## [23,] "clip" "24"
-    ## [24,] "clip" "25"
-    ## [25,] "clip" "26"
-    ## [26,] "clip" "27"
-    ## [27,] "clip" "28"
-    ## [28,] "clip" "29"
-    ## [29,] "clip" "30"
-    ## [30,] "clip" "31"
-    ## [31,] "clip" "32"
-    ## [32,] "clip" "33"
-    ## [33,] "clip" "35"
-    ## [34,] "clip" "36"
-    ## [35,] "clip" "37"
-    ## [36,] "clip" "38"
-    ## [37,] "clip" "39"
-    ## [38,] "clip" "40"
-    ## [39,] "clip" "41"
-    ## [40,] "clip" "42"
-    ## [41,] "clip" "43"
-    ## [42,] "clip" "44"
-    ## [43,] "clip" "45"
-    ## [44,] "clip" "46"
-    ## [45,] "clip" "47"
-    ## [46,] "clip" "48"
-    ## [47,] "clip" "49"
-    ## [48,] "clip" "50"
-    ## [49,] "clip" "51"
-
-``` r
 p.num <- as.numeric(p.names.2[,2])
-p.num # Check results
-```
+#p.num # Check results
 
-    ##  [1]  0  1  2  3  4  5  6  8  9 10 11 12 13 14 15 16 18 19 20 21 22 23 24
-    ## [24] 25 26 27 28 29 30 31 32 33 35 36 37 38 39 40 41 42 43 44 45 46 47 48
-    ## [47] 49 50 51
-
-``` r
 # In order to use this as an index to subset our data, we need to add 1 since R starts indices at 1, not 0
 p.num <- p.num + 1 # Adds 1 to all values, for use as index 
 ```
@@ -1669,23 +1537,16 @@ Now we can actually subset the data from the original *murica* dataset and combi
 ``` r
 murica.data <- data.frame(murica)[p.num,] # Use p.num as the indices to subset murica
 
-head(murica.data[1:8]) # Check results, first 8 columns
+head(murica.data[1:5]) # Check results, first 5 columns
 ```
 
-    ##   GEOID10 STUSPS10       NAME10      ALAND10    AWATER10  INTPTLAT10
-    ## 0      56       WY      Wyoming 251470069067  1864445306 +42.9918024
-    ## 1      42       PA Pennsylvania 115883064314  3397122731 +40.9042486
-    ## 2      39       OH         Ohio 105828706692 10269012119 +40.4149297
-    ## 3      35       NM   New Mexico 314160748240   756659673 +34.4391265
-    ## 4      24       MD     Maryland  25141638381  6989579585 +38.9466584
-    ## 5      44       RI Rhode Island   2677566454  1323668539 +41.5978358
-    ##     INTPTLON10 DP0010001
-    ## 0 -107.5419255    563626
-    ## 1 -077.8280624  12702379
-    ## 2 -082.7119975  11536504
-    ## 3 -106.1261511   2059179
-    ## 4 -076.6744939   5773552
-    ## 5 -071.5252895   1052567
+    ##   GEOID10 STUSPS10       NAME10      ALAND10    AWATER10
+    ## 0      56       WY      Wyoming 251470069067  1864445306
+    ## 1      42       PA Pennsylvania 115883064314  3397122731
+    ## 2      39       OH         Ohio 105828706692 10269012119
+    ## 3      35       NM   New Mexico 314160748240   756659673
+    ## 4      24       MD     Maryland  25141638381  6989579585
+    ## 5      44       RI Rhode Island   2677566454  1323668539
 
 ``` r
 nrow(data.frame(murica)) # 52 rows
@@ -1717,14 +1578,15 @@ slotNames(murica.spdf.2) #Check results - Note the Data slot
 
     ## [1] "data"        "polygons"    "plotOrder"   "bbox"        "proj4string"
 
+Plot that thang!
+
 ``` r
-plot(murica.spdf.2, col = "gray90") # Plot that thang
+plot(murica.spdf.2, col = "gray90") 
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-75-1.png)
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-79-1.png)
 
-Some Maps
----------
+### Some Maps
 
 Awesome, we now have the real 'Murica ready to go. We can now use the census data to make a couple informative maps. The most obvious is choropleth maps. Choropleth maps should not be used to map *totals*, but instead should be used to map proportions, since the various sizes of features can mislead readers. So, to map population, let's roll with population density. Note that the rather obtuse names for the fields are explained in an .xls file that came in the same .zip as the shapefile.
 
@@ -1781,7 +1643,7 @@ title("Density of 'Muricans", line = -2, col.main = "gray20", cex.main = 2)
 choro.legend(-125.5, 29.5, pop.dens.shades, bty ="n",  title = "Folks per Square Mile") # Placed manually, use our shades array, and remove legend box
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-77-1.png)
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-81-1.png)
 
 Legends are an art unto themselves, but lots of aesthetic options are available through the various parameters listed [here](https://www.rdocumentation.org/packages/graphics/versions/3.3.2/topics/legend?).
 
@@ -1833,7 +1695,7 @@ murica.lambert <- spTransform(murica.spdf, CRS(lambert.ea)) # CRS interfaces wit
 plot(murica.lambert) # Oooh pretty curve!
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-79-1.png)
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-83-1.png)
 
 Okay, now to just re-do our previous map with our reprojected data.
 
@@ -1857,14 +1719,14 @@ title("Density of 'Muricans",
       cex.main = 2) # Create title, move it down two lines, make it gray, make it bigger (cex)
 
 #Note that since the coordinate system changed, we need to change our legend coordinates:
-choro.legend(-2250000, -1643980, 
+choro.legend(-2250000, -1543980, 
              border = "gray10",
              pop.dens.shades, 
              bty ="n",  
              title = "Folks per Square Mile")
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-80-1.png)
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-84-1.png)
 
 ``` r
 par(o.par)
@@ -1873,7 +1735,7 @@ par(o.par)
 Extra!
 ======
 
-There are some very quick ways to generate maps using existing web services and the *ggmap* package, adapted from R-bloggers (here)\[<https://www.r-bloggers.com/google-maps-and-ggmap/>\]. (Here is a useful cheatsheet for ggmap)\[<https://www.nceas.ucsb.edu/~frazier/RSpatialGuides/ggmap/ggmapCheatsheet.pdf>\].
+There are some very quick ways to generate maps using existing web services and the *ggmap* package, adapted from R-bloggers [here](https://www.r-bloggers.com/google-maps-and-ggmap/). [Here is a useful cheatsheet for ggmap](https://www.nceas.ucsb.edu/~frazier/RSpatialGuides/ggmap/ggmapCheatsheet.pdf).
 
 Unfortunately, depending on various projections, it can be somewhat difficult to map your data onto these base layers (easiest for points).
 
@@ -1881,11 +1743,7 @@ Unfortunately, depending on various projections, it can be somewhat difficult to
 #install.packages("ggmap")
 #install.packages("mapproj")
 library(ggmap)
-```
 
-    ## Warning: package 'ggmap' was built under R version 3.4.3
-
-``` r
 USA <- get_map(location = "United States", zoom = 3) # Create a map and store it
 ```
 
@@ -1897,17 +1755,19 @@ USA <- get_map(location = "United States", zoom = 3) # Create a map and store it
 ggmap(USA) # Plot it! (begin eagle tears)
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-81-1.png)
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/ggmap_1-1.png)
 
 ``` r
 #plot(USA) # Also works but not as friendly for advanced things
 ```
 
+*ggmap* is quite flexible with input, since it's based on Google Maps:
+
 ``` r
-PA <- get_map(location = "Pennsylvania", zoom = 7) # Hey I know that place!
+PA <- get_map(location = "Pennsylvania", zoom = 8) # Hey I know that place!
 ```
 
-    ## Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=Pennsylvania&zoom=7&size=640x640&scale=2&maptype=terrain&language=en-EN&sensor=false
+    ## Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=Pennsylvania&zoom=8&size=640x640&scale=2&maptype=terrain&language=en-EN&sensor=false
 
     ## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Pennsylvania&sensor=false
 
@@ -1915,51 +1775,62 @@ PA <- get_map(location = "Pennsylvania", zoom = 7) # Hey I know that place!
 ggmap(PA) # Plot it
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-82-1.png)
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/ggmap_2-1.png)
+
+You can change the source and type, which has some interestingly artistic options:
 
 ``` r
 PA.2 <- get_map(location = "Pennsylvania", 
                 source = "stamen", # Change the source
                 maptype =  "watercolor", # Each source has different map types
-                zoom = 7 )
+                zoom = 8 )
 ```
 
-    ## Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=Pennsylvania&zoom=7&size=640x640&scale=2&maptype=terrain&sensor=false
+    ## Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=Pennsylvania&zoom=8&size=640x640&scale=2&maptype=terrain&sensor=false
 
     ## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Pennsylvania&sensor=false
 
-    ## Map from URL : http://tile.stamen.com/watercolor/7/35/46.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/8/71/94.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/7/36/46.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/8/72/94.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/7/37/46.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/8/73/94.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/7/35/47.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/8/74/94.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/7/36/47.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/8/71/95.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/7/37/47.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/8/72/95.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/7/35/48.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/8/73/95.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/7/36/48.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/8/74/95.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/7/37/48.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/8/71/96.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/7/35/49.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/8/72/96.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/7/36/49.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/8/73/96.jpg
 
-    ## Map from URL : http://tile.stamen.com/watercolor/7/37/49.jpg
+    ## Map from URL : http://tile.stamen.com/watercolor/8/74/96.jpg
+
+    ## Map from URL : http://tile.stamen.com/watercolor/8/71/97.jpg
+
+    ## Map from URL : http://tile.stamen.com/watercolor/8/72/97.jpg
+
+    ## Map from URL : http://tile.stamen.com/watercolor/8/73/97.jpg
+
+    ## Map from URL : http://tile.stamen.com/watercolor/8/74/97.jpg
 
 ``` r
 ggmap(PA.2) # Plot it
 ```
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-83-1.png)
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/ggmap_3-1.png)
+
+And of course imagery is also available:
 
 ``` r
-# You can also get imagery
 cool.kids.place <- get_map(location = c(lat = 40.793589, lon = -77.867026), # Where, I wonder?
                          color = "color", # Can change to bw for panchromatic
                          source = "google", # 
@@ -1972,13 +1843,12 @@ cool.kids.place <- get_map(location = c(lat = 40.793589, lon = -77.867026), # Wh
     ## Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=40.793589,-77.867026&zoom=17&size=640x640&scale=2&maptype=satellite&language=en-EN&sensor=false
 
 ``` r
-ggmap(cool.kids.place,extent = "device" )# Plot to extent of frame ("device")
+ggmap(cool.kids.place)
 ```
 
-    ## Warning: `panel.margin` is deprecated. Please use `panel.spacing` property
-    ## instead
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/ggmap_4-1.png)
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-84-1.png)
+... or just your standard basemap.
 
 ``` r
 cool.kids.place.roads <- get_map(location = c(lat = 40.793589, lon = -77.867026),
@@ -1993,10 +1863,12 @@ cool.kids.place.roads <- get_map(location = c(lat = 40.793589, lon = -77.867026)
     ## Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=40.793589,-77.867026&zoom=16&size=640x640&scale=2&maptype=roadmap&language=en-EN&sensor=false
 
 ``` r
-ggmap(cool.kids.place.roads, extent = "device") # Plot to extent of frame ("device")
+ggmap(cool.kids.place.roads)
 ```
 
-    ## Warning: `panel.margin` is deprecated. Please use `panel.spacing` property
-    ## instead
+![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/ggmap_5-1.png)
 
-![](GDS2017_Visualization_Tutorial_files/figure-markdown_github/unnamed-chunk-85-1.png)
+Conclusions
+===========
+
+As you can see, there are multiple ways to accomplish any visualization in R, and it can be tricky to decide on the best path. This tutorial can't tell you the optimal way to do something for your particular needs, but I hope it at least gave you a taste of what's possible with R and a little know-how. Happy coding!
