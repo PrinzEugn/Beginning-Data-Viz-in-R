@@ -5,7 +5,7 @@ January 30, 2017
 
 ### Meta-introduction: February 5, 2018
 
-This tutorial was originally created for the [Geospatial Data Science 2017 workshop](https://sites.psu.edu/gds2017/), which I co-organized along with Dr. Eun-Kyeong Kim, and which was help February 3rd-5th, 2017 on the Penn State campus. It was originally given as part of a live tutorial. I have slightly updated the formatting, but it is presented as-is.
+This tutorial was originally created for the [Geospatial Data Science 2017 workshop](https://sites.psu.edu/gds2017/), which I co-organized along with Dr. Eun-Kyeong Kim, and which was held February 3rd-5th, 2017 on the Penn State campus. It was originally given as part of a live tutorial. I have slightly updated the formatting, but it is presented as-is.
 
 Introduction
 ============
